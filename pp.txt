@@ -1,0 +1,18 @@
+Privacy Policy of Orokonui monitoring. (greenorange.space/orokonui or future hosting arangements)
+
+No cookies are given in ay part of the website.
+
+In the following files:
+    index.php
+    about.php
+    status.php
+    
+IP addresses are not recorded, unless unknowingly within the Apache or PHP software. Connection/visitor information will never leave the server unless it is legally required under New Zealand law.
+
+In the following files:
+    rules.php
+    resource/datahandling/*
+    
+IP addresses will be logged if any login or setting change attempts are made.
+
+Updated 2 July 2016

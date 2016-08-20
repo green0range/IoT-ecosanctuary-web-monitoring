@@ -1,0 +1,138 @@
+Successful login from 192.168.1.10. Session 17created with token 565fd2e34fb6d397e542cb3492defcc9820e5ef9 and salt 8713
+192.168.1.10 downloaded .htrules.log
+Incorrect hash for 192.168.1.10/565fd2e34fb6d397e542cb3492defcc9820e5ef9/. Attempted act: ADD_SENSOR
+Successful login from 192.168.1.10. Session 18created with token 0e7dd91730f48bc722c54fd1753c54a7a5f880ab and salt 28508
+Incorrect hash for 192.168.1.10/0e7dd91730f48bc722c54fd1753c54a7a5f880ab/. Attempted act: ADD_SENSOR
+192.168.1.10 downloaded .htrules.log
+Incorrect hash for 192.168.1.10/0e7dd91730f48bc722c54fd1753c54a7a5f880ab/. Attempted act: ADD_SENSOR
+Incorrect hash for 192.168.1.10/0e7dd91730f48bc722c54fd1753c54a7a5f880ab/. Attempted act: ADD_SENSOR
+192.168.1.10 submited db query on orokonui db UPDATE `sensor_config` SET `sensor_id`='1', `lat`='	-45.839', `lng`='170.508', `hr_name`='Intial test' WHERE `sensor_config`.`id` = '1'
+192.168.1.10 submited db query on orokonui db UPDATE `sensor_config` SET `sensor_id`='1', `lat`='	-45.839', `lng`='170.508', `hr_name`='Intial test' WHERE `sensor_config`.`id` = '1'
+192.168.1.10 submited db query on orokonui db UPDATE `sensor_config` SET `sensor_id`='1', `lat`='	-45.839', `lng`='170.508', `hr_name`='Intial test' WHERE `sensor_config`.`id` = '1'
+Successful login from 192.168.1.10. Session 19created with token 75f6de4fc5c26fc56004ec190dfe280a39960721 and salt 30819
+192.168.1.10 downloaded .htrules.log
+192.168.1.10 downloaded .httechnical.log
+192.168.1.10 downloaded .htrules.log
+Successful login from 192.168.1.9. Session 20created with token 95784c0971057846eddce5d123e3da513210a728 and salt 32360
+Successful login from 192.168.1.5. Session 21created with token d43d54815645bf5ae8fd58e72da9d71a89e3b2e1 and salt 35806
+192.168.1.5 downloaded .htrules.log
+Incorrect hash for 192.168.1.5/d43d54815645bf5ae8fd58e72da9de3b2e1/21. Attempted act: DOWNLOAD
+Incorrect hash for 192.168.1.5/d43d54815645bf5ae8fd58e72da9de3b2e1/21. Attempted act: DOWNLOAD
+Incorrect hash for 192.168.1.5/d43d54815645bf5ae8fd58e72da9de3b2e1/21. Attempted act: DOWNLOAD
+Incorrect hash for 192.168.1.10/1/. Attempted act: DOWNLOAD
+Successful login from 192.168.1.7. Session 22created with token d815758f4bd3110c80dbed3479c0063309de4579 and salt 17820
+192.168.1.7 downloaded .htrules.log
+192.168.1.7 downloaded .httechnical.log
+192.168.1.7 downloaded .httechnical.log
+192.168.1.7 submited db query on orokonui db INSERT INTO sensor_config (`sensor_id`, `lat`, `lng`, `hr_name`) VALUES ('3', '6.9898', '57.999', 'testing again')
+Successful login from 122.56.185.65. Session 23created with token 8f2228025f251c8a4f156e7015ef9786cf382da7 and salt 51140
+Successful login from 122.56.185.65. Session 24created with token 51bcbed30eb3348114db5725e25dde4f23b03d5f and salt 36820
+122.56.185.65 downloaded .htrules.log
+122.56.185.65 downloaded .htrules.log
+122.56.185.65 downloaded .htrules.log
+Successful login from 192.168.1.10. Session 25created with token 46ffb4be76aee2d7dbc2f6434171eb040c57c9cc and salt 1010
+Successful login from 122.56.185.65. Session 26created with token 02d01d1fa4a4953b1f08277acee3f355bf0e5f08 and salt 2562
+Successful login from 118.149.144.37. Session 27created with token 0ee9e7590af84d020afc4f44827616200412a21d and salt 55028
+Successful login from 122.56.185.65. Session 28created with token 1b78a0e830551c2da7c55d0dafaa1b2b8327da9b and salt 29434
+Successful login from 122.56.185.65. Session 29created with token 0e86958c03a8a18ed5885752b88154203e320576 and salt 24192
+Successful login from 122.56.185.65. Session 30created with token 4d06f7d97aa6322095ee186db0259914fd43e190 and salt 8587
+122.56.185.65 downloaded .htrules.log
+1466562002  :  122.56.185.65 downloaded .htrules.log
+1466569949  :  Successful login from 192.168.1.10. Session 31created with token 77483fe169c70f207f326aefbb63a3ecb1c0e9bb and salt 55468
+1466582906  :  Successful login from 192.168.1.10. Session 32created with token fbb372035febdf81276da2738690c94fbdbd7d3a and salt 36335
+1466582944  :  192.168.1.10 downloaded .htrules.log
+1466583389  :  192.168.1.10 downloaded .httechnical.log
+1466634438  :  Successful login from 118.149.251.85. Session 33created with token 914da055677d123a2d3d4684f9fdf6c1c8bed095 and salt 6262
+1466654021  :  Successful login from 118.149.212.59. Session 34created with token 8da791f7caec8d6e1ae1ab5b21c8323d2b1c4d2d and salt 13698
+1466807783  :  Successful login from 192.168.1.13. Session 35created with token 61b0c97251ab95b662a1a3da9e9f722805b9a671 and salt 8278
+1466807809  :  Successful login from 192.168.1.13. Session 36created with token a83fa9a14f4fa223384f3f672255a9c0b69221ab and salt 27740
+1467321042  :  Successful login from 122.56.185.65. Session 37created with token 3d54c9def5555463121ae2c041bea018c047ef7f and salt 56977
+1467322280  :  Incorrect hash for 122.56.185.65/3d54c9def55554a018c047ef7f/37. Attempted act: RULE
+1467322860  :  Successful login from 122.56.185.65. Session 38created with token 2b699e3879c8774df25d595f295dcd9bd5671f2d and salt 31702
+1467333380  :  Successful login from 122.56.185.65. Session 39created with token 26addcc6216ea5dc965915b39346a295a3e5a335 and salt 38430
+1467334762  :  Successful login from 122.56.185.65. Session 40created with token 0d3eacafb62869f677eac37d66d86f37015edad8 and salt 39911
+1467349402  :  Successful login from 192.168.1.13. Session 41created with token ceb90053741c67d5fd9ea14627fd1d03e5e4e619 and salt 55325
+1467359319  :  192.168.1.13 downloaded .htrules.log
+1467359371  :  192.168.1.13 downloaded .httechnical.log
+1467361233  :  192.168.1.13 downloaded .htrules.log
+1467361243  :  192.168.1.13 downloaded .htrules.log
+1467361249  :  192.168.1.13 downloaded .htrules.log
+1467361253  :  192.168.1.13 downloaded .htrules.log
+1467362141  :  Successful login from 192.168.1.13. Session 42created with token 3ad92ef345f25f39440909644865fdb3b6b62e34 and salt 16161
+1467362979  :  Successful login from 192.168.1.8. Session 43created with token 0b1291c6544593c70857f3018248a066cf9014a7 and salt 42367
+1467363888  :  192.168.1.8 downloaded .htrules.log
+1467364225  :  192.168.1.8 downloaded .htrules.log
+1467364240  :  192.168.1.8 downloaded .htrules.log
+1467493797  :  Successful login from 192.168.1.9. Session 44created with token 1ea948ef497599d98096b89930fb25b6f2d48a46 and salt 2677
+1467504852  :  Successful login from 118.149.166.88. Session 45created with token b1a4ca9f2fd819cc4c5f53f7d59d43c2cae69043 and salt 3966
+1467513665  :  Successful login from 192.168.1.13. Session 46created with token 16673a2c33e25e66cce5c2ae115c352401ffa71b and salt 12844
+1467598076  :  Successful login from 118.149.133.255. Session 47created with token eb9155ff34b8f8988f364979fc37bc537e1d3402 and salt 48520
+1467600699  :  Successful login from 118.149.174.177. Session 48created with token bf004cf6838748b2cdde45233973d96e4fd07c37 and salt 5156
+1467711331  :  Successful login from 118.92.84.236. Session 49created with token 4d07ee145ec93c9ec04579d152edec65f5424f39 and salt 36095
+1467712187  :  Successful login from 118.92.84.236. Session 50created with token be8e697a84b9c0ff365a2c260876333e77aed55e and salt 16801
+1467715136  :  Successful login from 118.92.73.76. Session 51created with token 489330005a41f7c0014af340ff7deb0ca10327ff and salt 23439
+1467715160  :  Successful login from 118.92.73.76. Session 52created with token 26b1bb2ee583a3b5560ee3b0eb879aa2a48570ba and salt 1122
+1467753856  :  Successful login from 122.56.185.65. Session 53created with token 29618fbf0ae9be7a6fa041019c4e6a18590c7ae8 and salt 11844
+1467754371  :  Successful login from 122.56.185.65. Session 54created with token e862daa7d30976757159be694ec0917478a1180d and salt 48837
+1467754599  :  Incorrect hash for 122.56.185.65/e862daa7d30976757159be694ec0917478a1180d/54ka=2201kb=1831. Attempted act: CH_AC
+1467754653  :  Incorrect hash for 122.56.185.65/e862daa7d30976757159be694ec0917478a1180d/54ka=2201kb=1831. Attempted act: CH_AC
+1467754756  :  Incorrect hash for 122.56.185.65/e862daa7d30976757159be694ec0917478a1180d/54ka=2201kb=1831. Attempted act: CH_AC
+1467754780  :  Incorrect hash for 122.56.185.65/e862daa7d30976757159be694ec0917478a1180d/54ka=2201kb=1831. Attempted act: CH_AC
+1467755645  :  Incorrect hash for 122.56.185.65/e862daa7d30976757159be694ec0917478a1180d/54ka=2201kb=1831ka=kb=. Attempted act: DOWNLOAD
+1467843275  :  Successful login from 122.56.185.65. Session 55created with token 09f3ebb429d60bf9e4aa40e602ea3f306c4eb9fd and salt 44627
+1468144366  :  Failed login attempt from ip 60.234.108.71
+1468144385  :  Failed login attempt from ip 60.234.108.71
+1469569575  :  Successful login from 122.56.235.95. Session 56created with token 3e83b462b9d9d32e2e594d51a76815865326a540 and salt 40035
+1469569592  :  Successful login from 122.56.235.95. Session 57created with token bcf518f0645aca3ed438630fbb81994ee7e692a5 and salt 30725
+1469586677  :  Successful login from 122.56.185.65. Session 58created with token b67269d5695833594f16c213a3e285122a6c36d6 and salt 47968
+1469586677  :  Successful login from 122.56.185.65. Session 59created with token cc6d8baab9f5894299aad5ef92a9985504a6d701 and salt 39401
+1469587184  :  Incorrect hash for 122.56.185.65/cc6d8baab9f5894299aad5ef92a9985504a6d701/59ka=10951kb=3299ka=kb=. Attempted act: ADD_SENSOR
+1469587745  :  Successful login from 122.56.211.197. Session 60created with token 5134ca99528dc36d556733cd66bf85803eda279e and salt 25728
+1469587805  :  Incorrect hash for 122.56.211.197/5134ca99528dc36d556733cd66bf85803eda279e/60ka=6319kb=1873ka=kb=. Attempted act: ADD_SENSOR
+1469604539  :  Successful login from 192.168.1.13. Session 61created with token e6e5d5e681fc8cd3dd11abf62de53d4a72ab4509 and salt 14609
+1469604601  :  Incorrect hash for 192.168.1.13/e6e5d5e681fc8cd3dd11abf62de53d4a72ab4509/61ka=17593kb=15881ka=kb=ka=kb=. Attempted act: ADD_NUMBER
+1469604647  :  Incorrect hash for 192.168.1.13/e6e5d5e681fc8cd3dd11abf62de53d4a72ab4509/61ka=kb=. Attempted act: ADD_NUMBER
+1469604679  :  Incorrect hash for 192.168.1.13/e6e5d5e681fc8cd3dd11abf62de53d4a72ab4509/61ka=kb=. Attempted act: DEL_NUM
+1469604688  :  Incorrect hash for 192.168.1.13/e6e5d5e681fc8cd3dd11abf62de53d4a72ab4509/61ka=kb=. Attempted act: DEL_NUM
+1469604768  :  Incorrect hash for 192.168.1.13/e6e5d5e681fc8cd3dd11abf62de53d4a72ab4509/61ka=kb=ka=kb=ka=kb=ka=kb=ka=kb=ka=kb=. Attempted act: DOWNLOAD
+1469605100  :  Successful login from 192.168.1.13. Session 62created with token 545d6a140e4efaef3a2fc319816b6b4abc1efd11 and salt 60269
+1469605736  :  Successful login from 192.168.1.13. Session 63created with token 6317fe17b1f6d88ae7aa494a56dcdf45e3954c07 and salt 2559
+1469606860  :  Incorrect hash for 192.168.1.13/6317fe17b1f6d88ae7aa494a56dcdf45e3954c07/63ka=35639kb=28607ka=kb=ka=kb=. Attempted act: ADD_SENSOR
+1469607285  :  Incorrect hash for 192.168.1.13/6317fe17b1f6d88ae7aa494a56dcdf45e3954c07/63ka=35639kb=28607ka=kb=ka=kb=. Attempted act: ADD_SENSOR
+1469607297  :  192.168.1.13 submited db query on orokonui db INSERT INTO sensor_config (`sensor_id`, `lat`, `lng`, `hr_name`) VALUES ('', '', '', '')
+1469607320  :  Incorrect hash for 192.168.1.13/6317fe17b1f6d88ae7aa494a56dcdf45e3954c07/63ka=35639kb=28607ka=kb=ka=kb=kb=. Attempted act: ADD_SENSOR
+1469607333  :  192.168.1.13 submited db query on orokonui db UPDATE `sensor_config` SET `sensor_id`='', `lat`='', `lng`='', `hr_name`='' WHERE `sensor_config`.`id` = '3'
+1469607341  :  Incorrect hash for 192.168.1.13/6317fe17b1f6d88ae7aa494a56dcdf45e3954c07/63ka=kb=. Attempted act: ADD_SENSOR
+1469607462  :  Successful login from 192.168.1.13. Session 64created with token fda2772bf3a97e5a1727caca79d250c6b7777547 and salt 26358
+1469607582  :  Incorrect hash for 192.168.1.13/545d6a140e4efaef3a2fc319816b6b4abc1efd11/62ka=3337kb=307ka=kb=. Attempted act: SENSOR_TYPE
+1469607898  :  192.168.1.13 submited db query on orokonui db INSERT INTO sensor_config (`sensor_id`, `lat`, `lng`, `hr_name`) VALUES ('2', '-45.7759348', '170.6005615', 'example1')
+1469608645  :  Successful login from 192.168.1.13. Session 65created with token d4f6e305f0125c4902b00b4a54191a4a4c075b92 and salt 52901
+1469608686  :  192.168.1.13 submited db query on orokonui db INSERT INTO sensor_config (`sensor_id`, `lat`, `lng`, `hr_name`) VALUES ('4', '-45.7770872', '170.5978257', 'example2')
+1469658845  :  Successful login from 122.56.185.65. Session 66created with token e5fbf9935b38a711f72bc1e690d36b759520ceef and salt 38227
+1469688557  :  Successful login from 192.168.1.13. Session 67created with token 8e3e41cbfaa5cb2672b92cb2c6e1005b748f2fea and salt 39675
+1469741161  :  Successful login from 122.56.185.65. Session 68created with token 283e440a5a4553f8f398ac4c830a1caa1026b0e7 and salt 26571
+1469753001  :  Successful login from 122.56.204.5. Session 69created with token 2b55c5c031bdde133a425dd46fb9ed88ecce47b2 and salt 58041
+1469780018  :  Successful login from 192.168.1.13. Session 70created with token 0fb1a2225cf22e121a796f5968ba56f77d69fabd and salt 9003
+1469823810  :  Successful login from 192.168.1.13. Session 71created with token e337894cfbd171dc70d4b1d5d0addc811cb0f0b0 and salt 19015
+1469926354  :  Successful login from 192.168.1.4. Session 72created with token 700d0ea3546491b6ce5530d525b174586824e1ac and salt 53991
+1470018023  :  Successful login from 122.56.185.65. Session 73created with token 8c1efbc73c957d0521b890b796841b7ebcf01583 and salt 7838
+1470209713  :  Successful login from 192.168.1.5. Session 74created with token fa6e7ed8861990054f68aeb7ab919aa2a1691719 and salt 50244
+1470287474  :  Successful login from 192.168.1.10. Session 75created with token beedbcec88ac05d45046bb8d69a03c1f2dc73d93 and salt 13932
+1470432741  :  Successful login from 192.168.1.7. Session 76created with token 1994a32b44dd19cf1406075c4509fd2adf5615c4 and salt 61027
+1470438771  :  Successful login from 192.168.1.7. Session 77created with token 313793cb1ad4b0059e59d70ce5680ab620e76d99 and salt 43281
+1470438940  :  192.168.1.7 submited db query on orokonui db UPDATE `sensor_config` SET `sensor_id`='0', `lat`='-45.7759348', `lng`='170.508', `hr_name`='example gate' WHERE `sensor_config`.`id` = '3'
+1470438985  :  192.168.1.7 submited db query on orokonui db INSERT INTO sensor_config (`sensor_id`, `lat`, `lng`, `hr_name`) VALUES ('0', '-45.7759', '170.598', 'example gate')
+1470533279  :  Successful login from 203.96.140.107. Session 78created with token 529badc3d659f26a55ae506a5ef3d6f82dd089fe and salt 55820
+1470602851  :  Successful login from 115.189.99.102. Session 79created with token d44d1f54c030b860e95552721b8ac2f4e2670055 and salt 33475
+1470612799  :  Successful login from 122.56.185.65. Session 80created with token 2172ec97f9495b73035be506f3c6de637b6b090a and salt 18627
+1470623646  :  Successful login from 122.56.185.65. Session 81created with token 6c97c3b60dedd4d1bccd9daa72e8c64ad3f9f839 and salt 20865
+1471043706  :  Successful login from 122.56.207.77. Session 82created with token 5884f2855e7374881b221d787c22f95472e17269 and salt 19642
+1471382413  :  Successful login from 122.56.205.116. Session 83created with token a207763e638fa4015c8210f99b378d3d31e786e1 and salt 52541
+1471383492  :  122.56.205.116 submited db query on orokonui db INSERT INTO sensor_config (`sensor_id`, `lat`, `lng`, `hr_name`) VALUES ('16', '0', '0', 'hi')
+1471383570  :  122.56.205.116 submited db query on orokonui db INSERT INTO sensor_config (`sensor_id`, `lat`, `lng`, `hr_name`) VALUES ('15', '0', '0', 'hi')
+1471409809  :  Failed login attempt from ip 60.234.32.28
+1471419241  :  Successful login from 192.168.1.7. Session 84created with token 9da95ae00e340b281d75416c4a0f2f189d0f952d and salt 45384
+1471419274  :  192.168.1.7 downloaded .htrules.log
+1471419277  :  192.168.1.7 downloaded .httechnical.log
+1471419303  :  192.168.1.7 downloaded .htrules.log
+1471419361  :  192.168.1.7 downloaded .httechnical.log

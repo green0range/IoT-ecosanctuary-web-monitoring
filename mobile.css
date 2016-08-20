@@ -1,0 +1,91 @@
+* {
+margin: 0;
+padding: 0;
+}
+
+#content {
+	position: relative;
+	left: 1%;
+	width: 98%;
+	font-size: 200%;
+}
+
+#warning {
+	background-color: #F2DE41;
+}
+
+#status {
+	font-size: 250%;
+	font-family: 'Poiret One', cursive;
+}
+
+#header {
+	font-family: 'Righteous', cursive;
+	text-align: right;
+	background-color: #549e2b;
+	font-size: 100%;
+}
+
+#map {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 20px;
+}
+
+#options {
+	/*padding-left: 50px;*/
+	font-size: 10px;
+}
+
+table, th, td {
+    border: 1px solid black;
+	border-collapse: collapse;
+}
+
+td{
+	font-family: 'Open Sans', sans-serif;
+	font-size: 10px;
+}
+
+th{
+	font-size: 60px;
+}
+
+#mapcontainer {
+	height: 12px;
+}
+
+#tabin {
+	padding-left: 5%;
+}
+
+#data {
+    font-family: 'Open Sans', sans-serif;
+}
+/*footer {
+	font-family: 'Open Sans', sans-serif;
+	text-decoration: none;
+}*/
+
+#tofix {
+	font-size: 12%;
+}
+
+a {
+	text-decoration: none;
+	font-family: 'Open Sans', sans-serif;
+	font-size: inherit;
+	color: inherit;
+}
+
+a:visited {
+	text-decoration: none;
+	font-family: 'Open Sans', sans-serif;
+	font-size: inherit;
+	color: inherit;
+}
+a:hover {
+	text-decoration: underline;
+	font-family: 'Open Sans', sans-serif;
+	font-size: inherit;
+	color: inherit;
+}
