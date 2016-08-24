@@ -7,12 +7,12 @@ In the following files:
     about.php
     status.php
     
-IP addresses are not recorded, unless unknowingly within the Apache or PHP software. Connection/visitor information will never leave the server unless it is legally required under New Zealand law.
+IP addresses are not recorded, unless unknowingly within the Apache or PHP software. Connection/visitor information will never leave the server unless it is legally required under New Zealand, or UN/internation law. (or whatever country this is hosted within in future.)
 
 In the following files:
     rules.php
     resource/datahandling/*
     
-IP addresses will be logged if any login or setting change attempts are made.
+IP addresses will be logged if any login or setting change attempts are made. This is for adminisation and record keeping purpose, and protection and detection against unathorised logins, or login atempts/attacks. It
 
 Updated 2 July 2016

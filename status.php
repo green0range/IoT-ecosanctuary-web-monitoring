@@ -48,6 +48,58 @@ while ($row = $result->fetch_assoc())
 	array_push($delay, $row['delay']);
 	array_push($msg, $row['message']);
 }
+
+function subVariables($text);
+{
+    $stext = explode(" ",$text);
+    for ($i=0;$i<sizeof($stext);$i++)
+    {
+        $tmp=explode(".", $stext);
+        if ($tmp[0]=="NODE")
+        {
+            for ($j=0;$j<sizeof($node);$i++)
+            {
+                if ($tmp[1]==$node[$j])
+                {
+                    for ($k=0;$k<sizeof($node);$i++)
+                    {
+                        if ($tmp[2]==$sensors[$k])
+                        {
+                            if ($tmp=='VALUE')
+                            {
+                                // TODO RETURN VALUE
+                            }
+                            elseif ($tmp=='LAT')
+                            {
+                                // TODO RETURN LAT
+                            }
+                            elseif ($tmp=='LNG')
+                            {
+                                // TODO return lng
+                            }
+                            else
+                            {
+                                $stext = "[ERROR; we couldn't find that, have a look at the docs, and if you want something that's not here, feel free to make a suggestion!. Or submit a bug, it could be our side.]";
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if ($tmp[0]=="GET_NODES")
+        {
+            $names="(";
+            for ($j=0;$j<sizeof($node);$i++)
+            {
+                $names .= "'".$nodes[$j]"', ";
+            }
+            $names.=")";
+            $stext[$i]=$names;
+        }
+        // TODO GET_SENSORS
+    }
+}
+
 $q = "SELECT hr_name, lat, lng FROM sensor_config";
 $result = $db->query($q);
 while ($row = $result->fetch_assoc())
@@ -120,7 +172,10 @@ $q = "SELECT * FROM status_display";
 $result = $db->query($q);
 while ($row = $result->fetch_assoc())
 {
-	
+	if (row['enabled']==1)
+	{
+        echo subVariables($row['html']);
+	}
 }
 //messages
 echo $messages;
