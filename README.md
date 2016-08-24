@@ -5,6 +5,8 @@ Web/Server interface for monitoring Orokonui Ecosanctuary.
 
 [Find out more](http://greenorange.space/orokonui/about.php)
 
+[Documentation](https://github.com/green0range/IoT-ecosanctuary-web-monitoring-Docs) (in progress, and not to be relied on)
+
 This is a backend and web interface for an IotT monitoring system designed for the [orokonui](http://orokonui.nz/) ecosanctuary.
 
 Better Documentation is yet to come
