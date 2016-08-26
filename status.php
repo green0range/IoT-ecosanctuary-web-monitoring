@@ -51,6 +51,47 @@ while ($row = $result->fetch_assoc())
 
 function subVariables($text);
 {
+    // get all variable data
+    
+    $dba = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
+    $q = "SELECT * FROM sensor_data";
+    $result = $dba->query($q);
+    $node = array();
+    $sensor = array();
+    $lat = array();
+    $lng = array();
+    $time = array();
+    $allSensors = array[];
+    while ($row = $result->fetch_assoc())
+    {
+        array_push($lat, $row['lat']);
+        array_push($lng, $row['lng']);
+        array_push($sensor, $row['sType']);
+        array_push($time, $row['time']);
+    }
+    $q = "SELECT * FROM sensor_config";
+    $result = $dba->query)$q);
+    while ($row - $result->fetch_assoc())
+    {
+        for ($i=0;$i<sizeof($lat);$i++)
+        {
+            if ($lat[$i] == $row['lat'])
+            {
+                if ($lng[$i] == $row['lng'])
+                {
+                    array_push($node, $row['hr_name'];
+                }
+            }
+        }
+    }
+    $q = "SELECT * FROM sensor_types";
+    $result = $dba->query)$q);
+    while ($row - $result->fetch_assoc())
+    {
+        array_push($allsensors, $row['name'];
+    }
+    $dba->close();
+    
     $stext = explode(" ",$text);
     for ($i=0;$i<sizeof($stext);$i++)
     {
@@ -67,15 +108,15 @@ function subVariables($text);
                         {
                             if ($tmp=='VALUE')
                             {
-                                // TODO RETURN VALUE
+                                $stext = $value[$i];
                             }
                             elseif ($tmp=='LAT')
                             {
-                                // TODO RETURN LAT
+                                $stext = $lat[$i];
                             }
                             elseif ($tmp=='LNG')
                             {
-                                // TODO return lng
+                                $stext = $lng[$i];
                             }
                             else
                             {
@@ -91,13 +132,30 @@ function subVariables($text);
             $names="(";
             for ($j=0;$j<sizeof($node);$i++)
             {
-                $names .= "'".$nodes[$j]"', ";
+                $names .= "'
+                ".$nodes[$j]"', ";
             }
             $names.=")";
             $stext[$i]=$names;
         }
-        // TODO GET_SENSORS
+        if ($tmp[0]=="GET_SENSORS")
+        {
+            $names="(";
+            for ($j=0;$j<sizeof($allSensors);$i++)
+            {
+                $names .= "'
+                ".$allSensors$j]"', ";
+            }
+            $names.=")";
+            $stext[$i]=$names;
+        }
     }
+    $text = "";
+    for ($i=0;$i<sizeof($stext);$i++)
+    {
+        $text .=$stext[$i];
+    }
+    return $text;
 }
 
 $q = "SELECT hr_name, lat, lng FROM sensor_config";
