@@ -49,10 +49,9 @@ while ($row = $result->fetch_assoc())
 	array_push($msg, $row['message']);
 }
 
-function subVariables($text);
+function subVariables($text)
 {
     // get all variable data
-    
     $dba = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
     $q = "SELECT * FROM sensor_data";
     $result = $dba->query($q);
@@ -61,7 +60,7 @@ function subVariables($text);
     $lat = array();
     $lng = array();
     $time = array();
-    $allSensors = array[];
+    $allSensors = array();
     while ($row = $result->fetch_assoc())
     {
         array_push($lat, $row['lat']);
@@ -70,8 +69,8 @@ function subVariables($text);
         array_push($time, $row['time']);
     }
     $q = "SELECT * FROM sensor_config";
-    $result = $dba->query)$q);
-    while ($row - $result->fetch_assoc())
+    $result = $dba->query($q);
+    while ($row = $result->fetch_assoc())
     {
         for ($i=0;$i<sizeof($lat);$i++)
         {
@@ -79,23 +78,23 @@ function subVariables($text);
             {
                 if ($lng[$i] == $row['lng'])
                 {
-                    array_push($node, $row['hr_name'];
+                    array_push($node, $row['hr_name']);
                 }
             }
         }
     }
     $q = "SELECT * FROM sensor_types";
-    $result = $dba->query)$q);
-    while ($row - $result->fetch_assoc())
+    $result = $dba->query($q);
+    while ($row = $result->fetch_assoc())
     {
-        array_push($allsensors, $row['name'];
+        array_push($allSensors, $row['name']);
     }
     $dba->close();
-    
+
     $stext = explode(" ",$text);
     for ($i=0;$i<sizeof($stext);$i++)
     {
-        $tmp=explode(".", $stext);
+        $tmp=explode(".",$stext[$i]);
         if ($tmp[0]=="NODE")
         {
             for ($j=0;$j<sizeof($node);$i++)
@@ -130,10 +129,9 @@ function subVariables($text);
         if ($tmp[0]=="GET_NODES")
         {
             $names="(";
-            for ($j=0;$j<sizeof($node);$i++)
+            for ($j=0;$j<sizeof($nodes);$i++)
             {
-                $names .= "'
-                ".$nodes[$j]"', ";
+                $names .= "'".$nodes[$j]."',";
             }
             $names.=")";
             $stext[$i]=$names;
@@ -143,8 +141,7 @@ function subVariables($text);
             $names="(";
             for ($j=0;$j<sizeof($allSensors);$i++)
             {
-                $names .= "'
-                ".$allSensors$j]"', ";
+                $names .= "'".$allSensors[$j]."',";
             }
             $names.=")";
             $stext[$i]=$names;
@@ -230,7 +227,7 @@ $q = "SELECT * FROM status_display";
 $result = $db->query($q);
 while ($row = $result->fetch_assoc())
 {
-	if (row['enabled']==1)
+	if ($row['enabled']==1)
 	{
         echo subVariables($row['html']);
 	}

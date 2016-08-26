@@ -26,7 +26,7 @@ num = 0;
 
 function loadColourPicker(div, ent)
 {
-	entry.push(ent);
+	//entry.push(ent);
 	// creates canvas object
 	var can = document.createElement('canvas');
 	can.id = 'colour_canvas'+num;
@@ -44,6 +44,7 @@ function loadColourPicker(div, ent)
 		cd.fillRect(5+(i*5)+(i*50),5,50,20);
 	}
 	num++;
+	entry.push(ent);
 }
 
 function getColour(e, id)

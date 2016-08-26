@@ -136,3 +136,6 @@ Successful login from 122.56.185.65. Session 30created with token 4d06f7d97aa632
 1471419277  :  192.168.1.7 downloaded .httechnical.log
 1471419303  :  192.168.1.7 downloaded .htrules.log
 1471419361  :  192.168.1.7 downloaded .httechnical.log
+1471812725  :  Successful login from 192.168.1.2. Session 85created with token 3508b1d4a508f24db1aa343cccdd0dbf22d96a86 and salt 36901
+1471813078  :  192.168.1.2 submited db query on orokonui db INSERT INTO sensor_config (`sensor_id`, `lat`, `lng`, `hr_name`) VALUES ('0', '0', '0', 'TestGate')
+1471936863  :  Successful login from 122.56.208.4. Session 86created with token 8e4bf3a585691ca7f714847c75fd6a7bb57d18c0 and salt 34094
