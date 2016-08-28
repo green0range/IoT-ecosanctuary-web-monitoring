@@ -9,7 +9,7 @@
 			 * Therefore, anyone is able to see the rules, however only those logged in can change them.
 			 */
 			$links = "rules.php?hk=1&token=" . $_GET['token'] . "&session=" . $_GET['session'] . "&ka=".$_GET['ka']."&kb=".$_GET['kb'];
-			$links_auth = "resource/datahandling/submit.php?stage=3&token=" . $_GET['token'] . "&session=" . $_GET['session']. "&ka=".$_GET['ka']."&kb=".$_GET['kb']; 
+			$links_auth = "resource/datahandling/submit.php?stage=3&token=" . $_GET['token'] . "&session=" . $_GET['session']. "&ka=".$_GET['ka']."&kb=".$_GET['kb'];
 			// Always use <above> when linking to other pages, as it keeps track of token and session id for you.
 			$sidebar = "<div id=sidebar>
 					<p>
@@ -18,6 +18,7 @@
 						<a href='" . $links . "&redirect=config:alerts'>Alert Config</a><br>
                                                 <a href='" . $links . "&redirect=config:sensors'>Sensor config</a><br>
 						<a href='" . $links . "&redirect=config:numbers'>Contacts</a><br>
+						<a href='" . $links . "&redirect=config:status'>Status</a><br>
 						<a href='" . $links . "&redirect=about:config'>Setup</a><br>
 					</p>
 				</div>";
@@ -204,7 +205,7 @@ $page_contents .="</p>
       <input type='text'name='msg' size='80'></input><br><br></p>
       <input type='submit' value='Add alert. '></input>
 	<br><br>
-	<input type='checkbox' name='send_clear'></input> <strong>Send All clear? </strong>(if problem resolves itself - the opposite condision is meet - an 'all clear' text will be sent.)
+	<input type='checkbox' name='send_clear'></input> '];
 	<br><br>
       <p><strong>Formating help: </strong>Any *-ed lines requires all fields filled.
         Any other line requires either all or none but not partital filled fields<br><br>
@@ -226,6 +227,14 @@ $page_contents .="</p>
   </form>
 </div>";
 
+			}
+			else if ($_GET['redirect'] == "config:status"){
+				$page_contents = $sidebar . "<div id='main'>
+				<h1>Status</h1>
+				<p>The status pages by default provides automatic warns for all issues detected, as defined by your alert. If there is a text alert that will automatically create an alert on the status page. In addition to this you can customise the status page by creating custom html and accessing real-time data through the api.</p>
+				<a target='_blank' href='text-editor.php?hk=1&token=" . $_GET['token'] . "&session=" . $_GET['session'] . "&ka=".$_GET['ka']."&kb=".$_GET['kb']."&db=status_display&row=1&exit=close'>Edit status html</a>
+				<p>Note this will be wrapped with the default template, which you cannot edit, without editing the source code. (Which your most welcome to do, under GPL3 conditions)</p>
+				</div>";
 			}else if ($_GET['redirect'] == "about:logs"){
 				$page_contents = $sidebar . "<div id='main'>
   <h1>Logs</h1><br>
