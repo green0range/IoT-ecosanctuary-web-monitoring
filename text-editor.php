@@ -13,11 +13,10 @@ $exit = $_GET['exit'];
 $dat = $_GET['dat'];
 
 //build urls
-function saveurl()
-{
-  'resource/datahandling/submit.php?session='.$session.'&ka='.$ka.'&kb='.$kb.
-  '&token='.$token.'&act=QUERY&db='.$db.'&q=UPDATE `orokonui`.'.$db." SET `html` = '"."|DATA|"."' WHERE `".$db.'`.`id` = '.$id.'&dat='.$data;
-}
+$saveurl = 'resource/datahandling/submit.php?stage=3&session='.$session.'&ka='.$ka.'&kb='.$kb.
+  '&token='.$token.'&act=QUERY&db='.$db;
+
+$query = 'q=UPDATE`orokonui`.`'.$db."`SET`html`='"."|DATA|"."'WHERE`".$db.'`.`id`='."'".$row."'";
 $exiturl = 'rules.php?session='.$session.'&ka='.$ka.'&kb='.$kb.'&token='.$token.'&redirect='.$exit;
 ?>
 <html>
@@ -29,7 +28,7 @@ $exiturl = 'rules.php?session='.$session.'&ka='.$ka.'&kb='.$kb.'&token='.$token.
     <div id='toolbar'>
       <h5>HTML/JS In-Browser Editor
       <input type='submit' id='exit' value='Exit' onclick="exit()"></input>
-      <input type='submit' id='save' value='Save' onclick=""></input>
+      <input type='submit' id='save' value='Save' onclick="save()"></input>
       <input type='submit' id='preview' value='Preview' onClick="genPre()"></input>
     </h5>
     </div>
@@ -74,17 +73,21 @@ $exiturl = 'rules.php?session='.$session.'&ka='.$ka.'&kb='.$kb.'&token='.$token.
     var div = document.createElement("div");
     function save()
     {
+     alert('saving');
       var doc = document.getElementById('editor');
       var save = new XMLHttpRequest();
-      var savestr = <?php echo saveurl();?>;
-      var savearr = savestr.split("|"),
-      var savestr = savearr[0] + doc.value + savearr[2];
+      var savestr = "<?php echo $saveurl;?>";
+      var q = "<?php echo $query; ?>".split("|");
+      q = q[0] + doc.value + q[2];
+      encodeURI(q);
+      savestr +="&"+q;
       save.open("GET", savestr);
       save.send();
+      console.log(save.responseText);
     }
     function exit()
     {
-      window.location = <?php echo $exiturl; ?>;
+      window.location = '<?php echo $exiturl; ?>';
     }
     function genPre()
     {
