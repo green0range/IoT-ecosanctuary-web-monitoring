@@ -566,12 +566,12 @@ if ($stage == 3){
 	$ka = $_GET['ka'];
 	$kb = $_GET['kb'];
         header("Location: ../../rules.php?hk=1&ka=$ka&kb=$kb&print=Incorrect_Access_Codes");
-	//header("Location: http://localhost/rules.php?hk=1&ka=$ka&kb=$kb&print=Incorrect_Access_Codes");  
+	//header("Location: http://localhost/rules.php?hk=1&ka=$ka&kb=$kb&print=Incorrect_Access_Codes");
   }else{
         // determine what request type
 	$token = $_GET['token'];
 	if ($_GET['act'] == "LOGIN"){
-		// generate a session key. This combines the hash of the ip, with a salt and token. The session key and salt are stored in db with a session is, however the 
+		// generate a session key. This combines the hash of the ip, with a salt and token. The session key and salt are stored in db with a session is, however the
 		// token is only stored by the browser and sent on each connection. It the sent key, ip and salt all hash to the same thing, access is allowed.
 		$salt = rand(2**16,2**32);
 		$token = hash('ripemd160',rand(2**16,2**32));
@@ -668,6 +668,11 @@ if ($stage == 3){
 			$q = "DELETE FROM `orokonui`.`sensor_config` WHERE `sensor_config`.`sensor_id` = " . $_GET['id'];
                         $db = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
                         $db->query($q);
+		}
+    if ($_GET['act']=='QUERY'){
+			$q = $_GET['q'];
+      $db = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
+      $db->query($q);
 		}
 		if ($_GET['act']=='DEL_RULE'){
                         $q = "DELETE FROM `orokonui`.`rules` WHERE `rules`.`id` = " . $_GET['id'];

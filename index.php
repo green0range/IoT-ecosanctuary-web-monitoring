@@ -1,5 +1,7 @@
+<!DOCTYPE html>
 <html>
 	<head>
+	<meta charset="utf-8">
 	<title>Data - Orokonui monitoring</title>
 	<!-- Import Styles CSS -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -495,7 +497,7 @@
 					<p><?php
 						for ($i=0;$i<sizeof($selectedTypes);$i++){
 							if ($i==0){
-								$tmp = $lineColour; 
+								$tmp = $lineColour;
 							}
 							if ($i==1){
                                 $tmp = $lineColour1;
@@ -773,7 +775,7 @@
 						// Detect if mobile
 						if(<?php echo $mobile;?> == true){
 							cd.font = 'italic 40pt Calibri';
-						} 
+						}
 						cd.fillText(tmptext, 0, canvasy-(i*(canvasy/ylabels)));
 					}
 					// add x gridlines and labels
@@ -800,7 +802,7 @@
 						// Detect if mobile
 						if(<?php echo $mobile;?> == 1){
 							cd.font = 'italic 40pt Calibri';
-						} 
+						}
 						cd.fillText(formattedTime, canvasx-(i*(canvasx/xlabels)), canvasy);
 					}
 					// Graph data points
