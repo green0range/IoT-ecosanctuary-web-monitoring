@@ -19,6 +19,7 @@
                                                 <a href='" . $links . "&redirect=config:sensors'>Sensor config</a><br>
 						<a href='" . $links . "&redirect=config:numbers'>Contacts</a><br>
 						<a href='" . $links . "&redirect=config:status'>Status</a><br>
+						<a href='" . $links . "&redirect=config:datainterpretation'>Interpretation</a><br>
 						<a href='" . $links . "&redirect=about:config'>Setup</a><br>
 					</p>
 				</div>";
@@ -227,10 +228,10 @@ $page_contents .="</p>
   </form>
 </div>";
 
-			}else if ($_GET['redirect'] == "config:datainterprutation"){
+			}else if ($_GET['redirect'] == "config:datainterpretation"){
 				$page_contents = $sidebar . "<div id='main'>
-				<h1>Data interprutation</h1>
-				<p>This is where you can interpruate the raw data. Create PHP scripts here that will be executated when incoming data is added to the  system.</p><br>
+				<h1>Data interpretation</h1>
+				<p>This is where you can interpreate the raw data. Create PHP scripts here that will be executated when incoming data is added to the  system.</p><br>
 				<h4>Current Files</h4>";
                 // get the current files.
                 // (ripped off my blog, hence 'post' variable names)
