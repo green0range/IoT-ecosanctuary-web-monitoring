@@ -3,21 +3,31 @@
 // handles data transfer and authenication
 
 //pull in info
-$session = $_GET['session'];
-$ka = $_GET['ka'];
-$kb = $_GET['kb'];
-$db = $_GET['db'];
-$row = $_GET['row'];
-$token = $_GET['token'];
-$exit = $_GET['exit'];
-$dat = $_GET['dat'];
+if ($_GET['mode'] !='FILE')
+{
+    $session = $_GET['session'];
+    $ka = $_GET['ka'];
+    $kb = $_GET['kb'];
+    $db = $_GET['db'];
+    $row = $_GET['row'];
+    $token = $_GET['token'];
+    $exit = $_GET['exit'];
+    $dat = $_GET['dat'];
 
-//build urls
-$saveurl = 'resource/datahandling/submit.php?stage=3&session='.$session.'&ka='.$ka.'&kb='.$kb.
-  '&token='.$token.'&act=QUERY&db='.$db;
+    //build urls
+    $saveurl = 'resource/datahandling/submit.php?stage=3&session='.$session.'&ka='.$ka.'&kb='.$kb.
+    '&token='.$token.'&act=QUERY&db='.$db;
 
-$query = 'q=UPDATE`orokonui`.`'.$db."`SET`html`='"."|DATA|"."'WHERE`".$db.'`.`id`='."'".$row."'";
-$exiturl = 'rules.php?session='.$session.'&ka='.$ka.'&kb='.$kb.'&token='.$token.'&redirect='.$exit;
+    $query = 'q=UPDATE`orokonui`.`'.$db."`SET`html`='"."|DATA|"."'WHERE`".$db.'`.`id`='."'".$row."'";
+    $exiturl = 'rules.php?session='.$session.'&ka='.$ka.'&kb='.$kb.'&token='.$token.'&redirect='.$exit;
+}else{
+    if (file_exists($_GET['f']))
+    {
+        $f = fopen($_GET['f']);
+        $dat = fread($f, filesize($_GET['f']));
+        fclose($f);
+    }
+}
 ?>
 <html>
   <head>
@@ -73,21 +83,36 @@ $exiturl = 'rules.php?session='.$session.'&ka='.$ka.'&kb='.$kb.'&token='.$token.
     var div = document.createElement("div");
     function save()
     {
-     alert('saving');
-      var doc = document.getElementById('editor');
-      var save = new XMLHttpRequest();
-      var savestr = "<?php echo $saveurl;?>";
-      var q = "<?php echo $query; ?>".split("|");
-      q = q[0] + doc.value + q[2];
-      encodeURI(q);
-      savestr +="&"+q;
-      save.open("GET", savestr);
-      save.send();
-      console.log(save.responseText);
+      if (<?php echo $_GET['mode'];?> == 'FILE')
+      {
+        // save to file, through submit.php
+      }
+      else
+      {
+        var doc = document.getElementById('editor');
+        var save = new XMLHttpRequest();
+        var savestr = "<?php echo $saveurl;?>";
+        var q = "<?php echo $query; ?>".split("|");
+        q = q[0] + doc.value + q[2];
+        encodeURI(q);
+        savestr +="&"+q;
+        save.open("GET", savestr);
+        save.send();
+        console.log(save.responseText);
+      }
     }
     function exit()
     {
-      window.location = '<?php echo $exiturl; ?>';
+      if (<?php echo $_GET[exit];?> != 'close')
+      {
+        window.location = '<?php echo $exiturl; ?>';
+      }
+      else
+      {
+        window.close();
+        // if this fail due to security setting, etc... redirect to a blank page.
+        window.location = 'about:blank';
+      }
     }
     function genPre()
     {

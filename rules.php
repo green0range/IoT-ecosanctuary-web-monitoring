@@ -227,12 +227,32 @@ $page_contents .="</p>
   </form>
 </div>";
 
+			}else if ($_GET['redirect'] == "config:datainterprutation"){
+				$page_contents = $sidebar . "<div id='main'>
+				<h1>Data interprutation</h1>
+				<p>This is where you can interpruate the raw data. Create PHP scripts here that will be executated when incoming data is added to the  system.</p><br>
+				<h4>Current Files</h4>";
+                // get the current files.
+                // (ripped off my blog, hence 'post' variable names)
+                $dir = "resource/user-data/data-interpretation-scripts/";
+                $posts = scandir($dir);
+                for ($i=0;$i<sizeof($posts);$i++){
+                    if (strpos($posts[$i], '.php')!== false){
+                        $mod_date = date("d/M/Y", filemtime($posts[$i]));
+                        $page_contents .= "<a href='text-editor?mode=FILE&f=" .$dir.$posts[$i] . "'>" . $posts[$i] . " - $mod_date</a><br>";
+                    }
+                }
+                $page_contents .="<br>
+				<br>
+				<p>For documentation of how to access the data base, please see the documentation <a href=''>repository</a></p>
+				<a href=''>New File</a>
+				</div>";
 			}
 			else if ($_GET['redirect'] == "config:status"){
 				$page_contents = $sidebar . "<div id='main'>
 				<h1>Status</h1>
-				<p>The status pages by default provides automatic warns for all issues detected, as defined by your alert. If there is a text alert that will automatically create an alert on the status page. In addition to this you can customise the status page by creating custom html and accessing real-time data through the api.</p>
-				<a target='_blank' href='text-editor.php?hk=1&token=" . $_GET['token'] . "&session=" . $_GET['session'] . "&ka=".$_GET['ka']."&kb=".$_GET['kb']."&db=status_display&row=1&exit=close'>Edit status html</a>
+				<p>The status pages by default provides automatic warns for all issues detected, as defined by your alert. If there is a text alert that will automatically create an alert on the status page. In addition to this you can customise the status page by creating custom html and accessing real-time data through the api.</p><br>
+				<a target='_blank' href='text-editor.php?hk=1&token=" . $_GET['token'] . "&session=" . $_GET['session'] . "&ka=".$_GET['ka']."&kb=".$_GET['kb']."&db=status_display&row=1&exit=close'>Edit status html</a> Enabled: <input type='checkbox' value='1'></input><br>
 				<p>Note this will be wrapped with the default template, which you cannot edit, without editing the source code. (Which your most welcome to do, under GPL3 conditions)</p>
 				</div>";
 			}else if ($_GET['redirect'] == "about:logs"){
