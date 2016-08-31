@@ -665,7 +665,8 @@ if ($stage == 3){
                         $db->query($q);
 		}
 		if ($_GET['act']=='WRITE_FILE'){
-                	file_put_contents($_GET['f'], $_GET['contents'])
+			// Must get back to main directory
+                	file_put_contents("../../".$_GET['f'], $_GET['contents']);
 		}
 		if ($_GET['act']=='DEL_SENSOR'){
 			$q = "DELETE FROM `orokonui`.`sensor_config` WHERE `sensor_config`.`sensor_id` = " . $_GET['id'];
