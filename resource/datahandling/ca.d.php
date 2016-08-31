@@ -71,4 +71,16 @@ if (file_exists('techical.log')){
 	unlink('technical.log');
 }
 
+echo "<br><br>Or, if your debuging, ignore the above. Your data interpretation scripts have been executed below:<br><br>";
+
+// run user made tasks
+$dir = "../user-data/data-interpretation-scripts/";
+$posts = scandir($dir);
+for ($i=0;$i<sizeof($posts);$i++){
+	if (strpos($posts[$i], '.php')!== false)
+	{
+		echo exec("php ".$dir.$posts[$i]);
+	}
+}
+
 ?>

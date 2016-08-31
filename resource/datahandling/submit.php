@@ -666,7 +666,10 @@ if ($stage == 3){
 		}
 		if ($_GET['act']=='WRITE_FILE'){
 			// Must get back to main directory
-                	file_put_contents("../../".$_GET['f'], $_GET['contents']);
+			$f = fopen("../../".$_GET['f'], "w") or die("Unable to write file");
+			fwrite($f, $_GET['contents']);
+			fclose($f);
+                	//file_put_contents("../../".$_GET['f'], $_GET['contents']);
 		}
 		if ($_GET['act']=='DEL_SENSOR'){
 			$q = "DELETE FROM `orokonui`.`sensor_config` WHERE `sensor_config`.`sensor_id` = " . $_GET['id'];

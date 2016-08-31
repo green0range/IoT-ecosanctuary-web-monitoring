@@ -166,10 +166,19 @@
 		if ($_GET['start_date'] != ""){
 			$startTimeUNIX = strtotime($_GET['start_date']);
 			$startTimeUNIX .= convert_am_pm_time($_GET['start_time']);
+			echo $startTimeUNIX;
+			$startTimeEnabled = 5;
 		}
 
-		$endTimeEnabled = 0;
-		if ($_GET['enTmd'] != ""){
+		// Time and date stuff
+                if ($_GET['end_date'] != ""){
+                        $endTimeUNIX = strtotime($_GET['end_date']);
+                        $endTimeUNIX .= convert_am_pm_time($_GET['end_time']);
+                        echo $endTimeUNIX;
+			$endTimeEnabled = 5;
+                }
+
+		/*if ($_GET['enTmd'] != ""){
 			$endTimeDay = $_GET['enTmd'];
 			$endTimeEnabled++;
 		}
@@ -197,7 +206,7 @@
 			$timestring .= " " . $monthName . " " . $endTimeYear;
 			$endTimeUNIX = strtotime($timestring);
 			echo $endTimeUNIX;
-		}
+		}*/
 
 
 
@@ -656,7 +665,7 @@
 					var canvas = document.getElementById("graph");
 					var cd = canvas.getContext("2d");
 					cd.canvas.width = canvasx;
-					alert(canvasx);
+					//alert(canvasx);
 					cd.font="15px Georgia";
 					cd.fillText("Time ->", canvasy, 0);
 					cd.fillStyle = "<?php echo $keyColour; ?>";
@@ -825,7 +834,7 @@
 					cd.beginPath();
 					cd.moveTo(xpoint[0], ypoint[0]);
 					cd.lineWidth = <?php echo $lineWeight; ?>;
-					cd.strokeStyle="<?php echo $lineColour; ?>";
+					cd.strokeStyle="#<?php echo $lineColour; ?>";
 					for (var i=0;i<yseries.length;i++) {
 						cd.lineTo(xpoint[i], ypoint[i]);
 						cd.stroke();
@@ -833,7 +842,7 @@
 					cd.beginPath();
 					cd.moveTo(xpoint1[0], ypoint1[0]);
 					cd.lineWidth = <?php echo $lineWeight; ?>;
-					cd.strokeStyle="<?php echo $lineColour1; ?>";
+					cd.strokeStyle="#<?php echo $lineColour1; ?>";
 					for (var i=0;i<yseries1.length;i++) {
 						cd.lineTo(xpoint1[i], ypoint1[i]);
 						cd.stroke();
@@ -841,7 +850,7 @@
 					cd.beginPath();
 					cd.moveTo(xpoint2[0], ypoint2[0]);
 					cd.lineWidth = <?php echo $lineWeight; ?>;
-					cd.strokeStyle="<?php echo $lineColour2; ?>";
+					cd.strokeStyle="#<?php echo $lineColour2; ?>";
 					for (var i=0;i<yseries2.length;i++) {
 						cd.lineTo(xpoint2[i], ypoint2[i]);
 						cd.stroke();
@@ -849,7 +858,7 @@
 					cd.beginPath();
 					cd.moveTo(xpoint3[0], ypoint3[0]);
 					cd.lineWidth = <?php echo $lineWeight; ?>;
-					cd.strokeStyle="<?php echo $lineColour3; ?>";
+					cd.strokeStyle="#<?php echo $lineColour3; ?>";
 					for (var i=0;i<yseries3.length;i++) {
 						cd.lineTo(xpoint3[i], ypoint3[i]);
 						cd.stroke();
@@ -857,7 +866,7 @@
 					cd.beginPath();
 					cd.moveTo(xpoint4[0], ypoint4[0]);
 					cd.lineWidth = <?php echo $lineWeight; ?>;
-					cd.strokeStyle="<?php echo $lineColour4; ?>";
+					cd.strokeStyle="#<?php echo $lineColour4; ?>";
 					for (var i=0;i<yseries4.length;i++) {
 						cd.lineTo(xpoint4[i], ypoint4[i]);
 						cd.stroke();
