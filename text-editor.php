@@ -37,7 +37,7 @@ if ($_GET['mode'] !='FILE')
         fclose($f);
     }
     $savefileurl = 'resource/datahandling/submit.php?stage=3&session='.$session.'&ka='.$ka.'&kb='.$kb.
-    '&token='.$token.'&act=WRITE_FILE&f='$_GET['f'];
+    '&token='.$token.'&act=WRITE_FILE&f='.$_GET['f'];
 }
 ?>
 <html>
