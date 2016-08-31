@@ -246,7 +246,7 @@ $page_contents .="</p>
                 $page_contents .="<br>
 				<br>
 				<p>For documentation of how to access the data base, please see the documentation <a href=''>repository</a></p>
-				<a href='text-editor?mode=FILE&f=".$dir.time()"'>New File</a>
+				<a target='_blank' href='text-editor.php?hk=1&token=" . $_GET['token'] . "&session=" . $_GET['session'] . "&ka=".$_GET['ka']."&kb=".$_GET['kb']."&mode=FILE&f=".$dir.time().".php'>New File</a>
 				</div>";
 			}
 			else if ($_GET['redirect'] == "config:status"){

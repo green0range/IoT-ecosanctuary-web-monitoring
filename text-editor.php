@@ -3,6 +3,15 @@
 // handles data transfer and authenication
 
 //pull in info
+$session = $_GET['session'];
+    $ka = $_GET['ka'];
+    $kb = $_GET['kb'];
+    $db = $_GET['db'];
+    $row = $_GET['row'];
+    $token = $_GET['token'];
+    $exit = $_GET['exit'];
+    $dat = $_GET['dat'];
+
 if ($_GET['mode'] !='FILE')
 {
     $session = $_GET['session'];
@@ -27,6 +36,8 @@ if ($_GET['mode'] !='FILE')
         $dat = fread($f, filesize($_GET['f']));
         fclose($f);
     }
+    $savefileurl = 'resource/datahandling/submit.php?stage=3&session='.$session.'&ka='.$ka.'&kb='.$kb.
+    '&token='.$token.'&act=WRITE_FILE&f='$_GET['f'];
 }
 ?>
 <html>
@@ -83,9 +94,18 @@ if ($_GET['mode'] !='FILE')
     var div = document.createElement("div");
     function save()
     {
-      if (<?php echo $_GET['mode'];?> == 'FILE')
+      if ('<?php echo $_GET['mode'];?>' == 'FILE')
       {
         // save to file, through submit.php
+	var doc = document.getElementById('editor');
+        var save = new XMLHttpRequest();
+        var savestr = "<?php echo $savefileurl;?>";
+        var q = "contents="+doc.value;
+        encodeURI(q);
+        savestr +="&"+q;
+        save.open("GET", savestr);
+        save.send();
+        console.log(save.responseText);
       }
       else
       {
@@ -103,7 +123,7 @@ if ($_GET['mode'] !='FILE')
     }
     function exit()
     {
-      if (<?php echo $_GET[exit];?> != 'close')
+      if ('<?php echo $_GET['exit'];?>' != 'close')
       {
         window.location = '<?php echo $exiturl; ?>';
       }
