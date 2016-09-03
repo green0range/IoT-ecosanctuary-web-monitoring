@@ -150,3 +150,13 @@ Successful login from 122.56.185.65. Session 30created with token 4d06f7d97aa632
 1472627232  :  Successful login from 192.168.1.7. Session 94created with token e2305909a63f1a31183eca0260ac2222f43316f4 and salt 20902
 1472632230  :  Successful login from 192.168.1.7. Session 95created with token 092beae6bf687ceb49764539e42f39a27b4c3a33 and salt 41436
 1472637053  :  Successful login from 192.168.1.7. Session 96created with token 6cedf66db546e7a819f95dc6177f9c80ac30ee9e and salt 44347
+1472767850  :  Successful login from 122.56.185.65. Session 97created with token ffb14df5407ab07616d093fe425712e7ab34f9bf and salt 52280
+1472768112  :  Successful login from 122.56.185.65. Session 98created with token 53163ef57cb3fb734076739be08aa4353cacf440 and salt 3880
+1472854827  :  Successful login from 192.168.1.7. Session 99created with token 92bc37d8cc3169510ee312be77d98646f7060def and salt 31117
+1472854906  :  192.168.1.7 downloaded .htrules.log
+1472854906  :  192.168.1.7 downloaded .htrules.log
+1472854930  :  Incorrect hash for 192.168.1.7/92bc37d3169510ee312be77d98646f7060def/99. Attempted act: RULE
+1472856178  :  Successful login from 192.168.1.7. Session 100created with token 062db932491212d77af0e09b677765e82424c6c2 and salt 57728
+1472856383  :  Incorrect hash for 192.168.1.7//. Attempted act: 
+1472882807  :  Successful login from 192.168.1.7. Session 101created with token 84afaee9f7f2d067fe206b064f2119cbfdddac9a and salt 62177
+1472892214  :  Successful login from 192.168.1.7. Session 102created with token e3445d856c7495bbfa53f54c1f80e88d4e93a3cd and salt 41746

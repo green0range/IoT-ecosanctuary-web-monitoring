@@ -32,7 +32,7 @@ if ($_GET['mode'] !='FILE')
 }else{
     if (file_exists($_GET['f']))
     {
-        $f = fopen($_GET['f']);
+        $f = fopen($_GET['f'], "r");
         $dat = fread($f, filesize($_GET['f']));
         fclose($f);
     }

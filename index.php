@@ -376,7 +376,38 @@
 					<script>
 						var sensorlocation = <?php if($location == "not_set"){echo "'not_set'";}else{echo "($location[0], $location[1])";} ?>;
 						if (sensorlocation != "not_set") {
-							document.write("<h2><?php echo $selectedTypes; ?> vs Time, for <?php echo $sName; ?> at <?php echo $location[0]; ?>, <?php echo $location[1]; ?>");
+
+<?php
+// gets hr sensor names
+$db = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
+$q = "SELECT * FROM sensor_config";
+$r = $db->query($q);
+while ($row = $r->fetch_assoc())
+{
+	if ($location[0] == $row['lat'])
+	{
+		$nodeName = $row['hr_name'];
+	}
+}
+$selected_str = $selectedTypes[0];
+if (selectedTypes[1] != "")
+{
+	$selected_str .= ", ".$selectedTypes[1];
+}
+if (selectedTypes[2] != "")
+{
+        $selected_str .= ", ".$selectedTypes[2];
+}
+if (selectedTypes[3] != "")
+{
+        $selected_str .= ", ".$selectedTypes[3];
+}
+if (selectedTypes[4] != "")
+{
+        $selected_str .= ", ".$selectedTypes[4];
+}
+?>
+							document.write("<h2><?php echo $_GET['type']; ?> vs Time, for <?php echo $nodeName; ?> (<?php echo $location[0]; ?>, <?php echo $location[1]; ?>)");
 						}
 					</script>
 					<!--contains options button-->

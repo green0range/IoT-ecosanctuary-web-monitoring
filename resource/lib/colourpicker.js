@@ -12,14 +12,14 @@ Your done.
 
 // colour credit: http://www.mulinblog.com/a-color-palette-optimized-for-data-visualization/
 var colours = ['#4d4d4d',
-'#5da5da',
-'#faa43a',
-'#60bd68',
-'#f17cb0',
-'#b2912f',
-'#b276b2',
-'#decf3f',
-'#f15854'];
+'5da5da',
+'faa43a',
+'60bd68',
+'f17cb0',
+'b2912f',
+'b276b2',
+'decf3f',
+'f15854'];
 
 entry = [];
 num = 0;
@@ -40,7 +40,7 @@ function loadColourPicker(div, ent)
 	cd.fillStyle = '#000000';
 	for (var i=0;i<9;i++)
 	{
-		cd.fillStyle = colours[i];
+		cd.fillStyle = '#'+colours[i];
 		cd.fillRect(5+(i*5)+(i*50),5,50,20);
 	}
 	num++;

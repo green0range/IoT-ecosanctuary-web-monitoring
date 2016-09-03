@@ -240,7 +240,7 @@ $page_contents .="</p>
                 for ($i=0;$i<sizeof($posts);$i++){
                     if (strpos($posts[$i], '.php')!== false){
                         $mod_date = date("d/M/Y", filemtime($posts[$i]));
-                        $page_contents .= "<a href='text-editor?mode=FILE&f=" .$dir.$posts[$i] . "'>" . $posts[$i] . " - $mod_date</a><br>";
+                        $page_contents .= "<a href='text-editor.php?mode=FILE&f=" .$dir.$posts[$i] . "'>" . $posts[$i] . " - $mod_date</a><br>";
                     }
                 }
                 $page_contents .="<br>

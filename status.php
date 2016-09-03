@@ -11,10 +11,10 @@
   <body bgcolor="#FFFFFF">
 
     <!--Comment this out when system is complete. Uncomment during mainince-->
-		<div id="warning">
+		<!--<div id="warning">
 			<p><strong>Warning:</strong> This system is under development. Any data is likely to
 				be false test data. Any about information may refer to furture plans.</p>
-		</div>
+		</div>-->
 
     <div id="header"> <!--I decided to but the header outside of the content wrapper so it would strech across the entire screen.-->
 			<img src="resource/header.png" width="100%">
@@ -51,6 +51,7 @@ while ($row = $result->fetch_assoc())
 
 function subVariables($text)
 {
+	//echo 'entered var sub';
     // get all variable data
     $dba = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
     $q = "SELECT * FROM sensor_data";
@@ -97,41 +98,54 @@ function subVariables($text)
         $tmp=explode(".",$stext[$i]);
         if ($tmp[0]=="NODE")
         {
-            for ($j=0;$j<sizeof($node);$i++)
+            for ($j=0;$j<sizeof($node);$j++)
             {
                 if ($tmp[1]==$node[$j])
                 {
-                    for ($k=0;$k<sizeof($node);$i++)
+		    if ($tmp[2]=="LAT")
+		    {
+			$stext[$i] = $lat[$j];
+		    }
+		    if ($tmp[2]=="LNG")
                     {
-                        if ($tmp[2]==$sensors[$k])
-                        {
-                            if ($tmp=='VALUE')
-                            {
-                                $stext = $value[$i];
-                            }
-                            elseif ($tmp=='LAT')
-                            {
-                                $stext = $lat[$i];
-                            }
-                            elseif ($tmp=='LNG')
-                            {
-                                $stext = $lng[$i];
-                            }
-                            else
-                            {
-                                $stext = "[ERROR; we couldn't find that, have a look at the docs, and if you want something that's not here, feel free to make a suggestion!. Or submit a bug, it could be our side.]";
-                            }
-                        }
+                        $stext[$i] = $lng[$j];
                     }
+		    else
+		    {
+                    	for ($k=0;$k<sizeof($sensor);$k++)
+                    	{
+				//echo $sensor[$k];
+                        	if ($tmp[2]==$sensor[$k])
+                        	{
+					//echo "found match";
+                            		if ($tmp[2]=='VALUE')
+                            		{
+                                		$stext[$i] = $value[$j];
+                            		}
+                            		elseif ($tmp[2]=='LAT')
+                           	 	{
+                           	 		$stext[$i] = $lat[$j];
+                            		}
+                            		elseif ($tmp[2]=='LNG')
+                            		{
+                                		$stext[$i] = $lng[$j];
+                            		}
+                            	else
+                            	{
+                            	    $stext = "[ERROR; we couldn't find that, have a look at the docs, and if you want something that's not here, feel free to make a suggestion!. Or submit a bug, it could be our side.]";
+                            	}
+                            }
+                    	}
+		    }
                 }
             }
         }
         if ($tmp[0]=="GET_NODES")
         {
             $names="(";
-            for ($j=0;$j<sizeof($nodes);$i++)
+            for ($j=0;$j<sizeof($node);$j++)
             {
-                $names .= "'".$nodes[$j]."',";
+                $names .= "'".$node[$j]."',";
             }
             $names.=")";
             $stext[$i]=$names;
@@ -139,10 +153,14 @@ function subVariables($text)
         if ($tmp[0]=="GET_SENSORS")
         {
             $names="(";
-            for ($j=0;$j<sizeof($allSensors);$i++)
+            for ($j=0;$j<sizeof($allSensors);$j++)
             {
-                $names .= "'".$allSensors[$j]."',";
-            }
+		if (sizeof($allSensors)-1>$j){
+                	$names .= "'".$allSensors[$j]."',";
+            	}else{
+			$names .="'".$allSensors[$j]."'";
+		}
+	    }
             $names.=")";
             $stext[$i]=$names;
         }
@@ -150,7 +168,7 @@ function subVariables($text)
     $text = "";
     for ($i=0;$i<sizeof($stext);$i++)
     {
-        $text .=$stext[$i];
+        $text .=$stext[$i]." ";
     }
     return $text;
 }
