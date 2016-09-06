@@ -1,0 +1,10 @@
+#gate data file, this is used by the gate magnetic tracker DO NOT MODIFIY, DO NOT DELETE.
+#Format is:
+# ic:intial closed reading
+# iu:intial unlatched reading
+# c:time:reading
+# ... etc
+# ra->'reason speficied'->nc:closed realignment->nu:unlatched realignment
+# keep logging...
+ic:23
+iu:27
