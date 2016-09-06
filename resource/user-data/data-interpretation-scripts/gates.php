@@ -23,19 +23,19 @@
 
 	function load_data()
 	{
-		if(file_exists('gate,dat'))
+		if(file_exists('gate.dat'))
 		{
 			$f = fopen('gate.dat', 'r');
-			$dat = fread($f);
+			$dat = fread($f, filesize('gate.dat'));
 			fclose($f);
 			// reading in values
-			$dat = explode('\n', $dat);
+			$dat = explode("\n", $dat);
 			$lines = array();
 			for ($i=0;$i<sizeof($dat);$i++)
 			{
-				if (explode('', $dat[$i])[0]!='#')
+				if (strpos($dat[$i],'#')===False)
 				{
-					array_push($lines, explode(':', $dat));
+					array_push($lines, explode(':', $dat[$i]));
 				}
 			}
 			return $lines;
@@ -45,20 +45,20 @@
 			// this is the initial startup, read in database and set base
 			// values. Create data file.
 			$buffer = '#gate data file, this is used by the gate magnetic tracker DO NOT MODIFIY, DO NOT DELETE.\n';
-			$db = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
-			$q = "SELECT * FROM sensor_data";
-			$r = $db->query($q);
-			while ($row = $r->fetch_assoc())
-			{
-				if ($row['sType'] == 'GateOpenReading')
-				{
-					$buffer .= 'initOpen:'.$row['sValue'].'\n';
-				}
-				if ($row['sType'] == 'GateUnlatchedReading')
-				{
-					$buffer .= 'initUnlatched'.$row['sValue'].'\n';
-				}
-			}
+			//~ $db = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
+			//~ $q = "SELECT * FROM sensor_data";
+			//~ $r = $db->query($q);
+			//~ while ($row = $r->fetch_assoc())
+			//~ {
+				//~ if ($row['sType'] == 'GateOpenReading')
+				//~ {
+					//~ $buffer .= 'initOpen:'.$row['sValue'].'\n';
+				//~ }
+				//~ if ($row['sType'] == 'GateUnlatchedReading')
+				//~ {
+					//~ $buffer .= 'initUnlatched'.$row['sValue'].'\n';
+				//~ }
+			//~ }
 			$f = fopen('gate.dat', 'w');
 			fwrite($f, $buffer);
 			fclose($f);
@@ -70,21 +70,43 @@
 	function save_data($lines)
 	{
 		$buffer = '#gate data file, this is used by the gate magnetic tracker DO NOT MODIFIY, DO NOT DELETE.\n';
-		for ($i=0;$i<sizeof($lines);
+		for ($i=0;$i<sizeof($lines);$i++) 
+		{
+			$buffer.=$lines[$i].'\n';
+		}
+		$f = fopen('gate.php', 'w');
+		fwrite($f, $buffer);
+		fclose($f);
+	}
+	
+	function get_ranges($dat)
+	{
+		for ($i=0;$i>sizeof($dat);$i++)
+		{
+			if ($dat[$i][0]=='ic')
+			{
+				$initialopenreading=$dat[$i][1];
+			}
+			if ($dat[$i][0]=='iu')
+			{
+				$initialunlatchedreading=$dat[$i][1];
+			}
+		}
 	}
 	
 	
 	// main program, always executes
-	$db = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
-	$q = "SELECT * FROM sensor_data";
-	$r = $db->query($q);
+	//$db = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
+	//$q = "SELECT * FROM sensor_data";
+	//$r = $db->query($q);
 	$mydat = load_data();
-	while ($row = $r->fetch_assoc())
-	{
-		if ($row['sType'] == 'Gate')
-		{
-			// find the latest gate reading, compare /w thresholds
-			
-		}
-	}
-?>(
+	//~ while ($row = $r->fetch_assoc())
+	//~ {
+		//~ if ($row['sType'] == 'Gate')
+		//~ {
+			//~ // find the latest gate reading, compare /w thresholds
+			//~ 
+		//~ }
+	//~ }
+	print_r($mydat);
+?>
