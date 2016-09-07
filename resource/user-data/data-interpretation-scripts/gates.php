@@ -262,17 +262,22 @@
 		}
 		// write dat changes
 		$fbuffer = "#gate data file, this is used by the gate magnetic tracker DO NOT MODIFIY, DO NOT DELETE.\n";
+		print_r($dat);
 		for($i=0;$i<sizeof($dat);$i++)
 		{
+			print_r($dat[$i]);
 			for ($j=0;$j<sizeof($dat[$i]);$j++)
 			{
-				for ($k=0;$k<sizeof($dat[$j]);$k++)
+				$fbuffer .= $dat[$i][$j];
+				if ($j!=sizeof($dat[$i])-1)
 				{
-					$fbuffer .= $dat[$j][$k].":"; 
+					$fbuffer .= ":";
 				}
-				$fbuffer .="\n";
+				
 			}
+			$fbuffer .="\n";
 		}
+		echo $fbuffer;
 		$f = fopen('gate.dat', 'w');
 		fwrite($f, $fbuffer);
 		fclose($f);
