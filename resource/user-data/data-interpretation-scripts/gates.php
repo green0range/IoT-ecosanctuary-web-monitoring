@@ -83,7 +83,8 @@
 	{
 		if ($count < 50)
 		{
-			return $oldc, $oldu;
+			$r = array($oldc, $oldu);
+			return $r;
 		}
 		else
 		{
@@ -114,11 +115,12 @@
 			{
 				$newu = $aveu+$buffer;
 			}
-			return $newc, $newu;
+			$r = array($newc, $newu);
+			return $r;
 		}
 	}
 	
-	function get_ranges($dat)
+	function get_ranges($dat, $checkvalues)
 	{
 		$aveo = 0;
 		$aveu = 0;
@@ -225,22 +227,55 @@
 		}
 		$range = $diff*0.85;
 		// checks if the average is within 80% of the max/min
-		if ($avec>(($range*0.8)+$cuse)
+		$new = -1;
+		if ($avec>(($range*0.8)+$cuse))
 		{
-			$newc, $newo = calc_new_readings($cuse, $uuse, $avec, $aveu, $countc);
+			$new = calc_new_readings($cuse, $uuse, $avec, $aveu, $countc);
 		}
-		if ($avec<($cuse-($range*0.8))
+		if ($avec<($cuse-($range*0.8)))
 		{
-			$newc, $newo = calc_new_readings($cuse, $uuse, $avec, $aveu, $countc);
+			$new = calc_new_readings($cuse, $uuse, $avec, $aveu, $countc);
 		}
-		if ($aveu>(($range*0.8)+$uuse)
+		if ($aveu>(($range*0.8)+$uuse))
 		{
-			$newc, $newo = calc_new_readings($cuse, $uuse, $avec, $aveu, $countc);
+			$new = calc_new_readings($cuse, $uuse, $avec, $aveu, $countc);
 		}
-		if ($aveu<($uuse-($range*0.8))
+		if ($aveu<($uuse-($range*0.8)))
 		{
-			$newc, $newo = calc_new_readings($cuse, $uuse, $avec, $aveu, $countc);
+			$new = calc_new_readings($cuse, $uuse, $avec, $aveu, $countc);
 		}
+		//checks values
+		$status = 'o';
+		if (($uuse+$range)>$checkvalue)
+		{
+			if (($uuse-$range)<$checkvalue)
+			{
+				$status='u';
+			}
+		}
+		if (($cuse+$range)>$checkvalue)
+		{
+			if (($cuse-$range)<$checkvalue)
+			{
+				$status='c';
+			}
+		}
+		// write dat changes
+		$fbuffer = "#gate data file, this is used by the gate magnetic tracker DO NOT MODIFIY, DO NOT DELETE.\n";
+		for($i=0;$i<sizeof($dat);$i++)
+		{
+			for ($j=0;$j<sizeof($dat[$i]);$j++)
+			{
+				for ($k=0;$k<sizeof($dat[$j]);$k++)
+				{
+					$fbuffer .= $dat[$j][$k].":"; 
+				}
+				$fbuffer .="\n";
+			}
+		}
+		$f = fopen('gate.dat', 'w');
+		fwrite($f, $fbuffer);
+		fclose($f);
 	}
 	
 	
@@ -249,7 +284,7 @@
 	//$q = "SELECT * FROM sensor_data";
 	//$r = $db->query($q);
 	$mydat = load_data();
-	get_ranges($mydat,0,0);
+	get_ranges($mydat,3);
 	//~ while ($row = $r->fetch_assoc())
 	//~ {
 		//~ if ($row['sType'] == 'Gate')
