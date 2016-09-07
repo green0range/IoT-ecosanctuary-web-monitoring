@@ -67,7 +67,7 @@
 		}
 	}
 	
-	function save_data($lines)
+	function save_data($lines, $checkvalue, $checktype)
 	{
 		$buffer = '#gate data file, this is used by the gate magnetic tracker DO NOT MODIFIY, DO NOT DELETE.\n';
 		for ($i=0;$i<sizeof($lines);$i++) 
@@ -75,22 +75,171 @@
 			$buffer.=$lines[$i].'\n';
 		}
 		$f = fopen('gate.php', 'w');
-		fwrite($f, $buffer);
+		fwrite($f, $buffer); 
 		fclose($f);
+	}
+	
+	function calc_new_readings($oldc, $oldu, $avec, $aveu, $count)
+	{
+		if ($count < 50)
+		{
+			return $oldc, $oldu;
+		}
+		else
+		{
+			// adds a 50% buffer
+			if ($oldc>$oldu)
+			{
+				$diff = $oldc-$oldu;
+			} 
+			else
+			{
+				$diff = $oldu-$oldc;
+			}
+			$diff = $diff*0.85;
+			$buffer = $diff*0.5;
+			if ($oldc>$avec)
+			{
+				$newc = $avec+$buffer;
+			}
+			else
+			{
+				$newc = $avec+$buffer;
+			}
+			if ($oldu>$aveu)
+			{
+				$newu = $aveu+$buffer;
+			}
+			else
+			{
+				$newu = $aveu+$buffer;
+			}
+			return $newc, $newu;
+		}
 	}
 	
 	function get_ranges($dat)
 	{
-		for ($i=0;$i>sizeof($dat);$i++)
+		$aveo = 0;
+		$aveu = 0;
+		$avec = 0;
+		$countc = 0;
+		$countu = 0;
+		$counto = 0;
+		$reinitialclosedreading = 0;
+		$reinitialunlatchedreading = 0;
+		for ($i=0;$i<sizeof($dat);$i++)
 		{
-			if ($dat[$i][0]=='ic')
+			if ($dat[$i][0]=="!init")
 			{
-				$initialopenreading=$dat[$i][1];
+				for ($j=$i;$j<sizeof($dat);$j++)
+				{
+					if ($dat[$j]=='!')
+					{
+						$i=$j;
+						break;
+					}
+					if ($dat[$j][0]=='ic')
+					{
+						$initialclosedreading=$dat[$j][1];
+					}
+					if ($dat[$j][0]=='iu')
+					{
+						$initialunlatchedreading=$dat[$j][1];
+					}
+				}
 			}
-			if ($dat[$i][0]=='iu')
+			if ($dat[$i][0]=="!reinit")
 			{
-				$initialunlatchedreading=$dat[$i][1];
+				for ($j=$i;$j<sizeof($dat);$j++)
+				{
+					if ($dat[$j]=='!')
+					{
+						$i=$j;
+						break;
+					}
+					if ($dat[$j][0]=='rc')
+					{
+						$reinitialclosedreading=$dat[$j][1];
+					}
+					if ($dat[$j][0]=='ru')
+					{
+						$reinitialunlatchedreading=$dat[$j][1];
+					}
+				}
 			}
+			if ($dat[$i][0]=='!norop')
+			{
+				for ($j=$i;$j<sizeof($dat);$j++)
+				{
+					if ($dat[$j]=='!')
+					{
+						$i=$j;
+						break;
+					}
+					if ($dat[$j][0]=='o')
+					{
+						$aveo += $dat[$j][1];
+						$counto++;
+					}
+					if ($dat[$j][0]=='c')
+					{
+						$avec += $dat[$j][1];
+						$countc++;
+					}
+					if ($dat[$j][0]=='u')
+					{
+						$aveu += $dat[$j][1];
+						$countu++;
+					}
+				}
+			}
+		}
+		$aveo /=$counto;
+		$avec /=$countc;
+		$aveu /=$countu;
+		// get +/- range, this is 90 percent of the half difference
+		if ($reinitialunlatchedreading!=0)
+		{
+			$uuse = $reinitialunlatchedreading;
+		}
+		else
+		{
+			$uuse = $initialunlatchedreading;
+		}
+		if ($reinitialclosedreading!=0)
+		{
+			$cuse = $reintialclosedreading;
+		}
+		else
+		{
+			$cuse = $initialclosedreading;
+		}
+		if ($cuse>$uuse)
+		{
+			$diff = $cuse-$uuse;
+		} 
+		else
+		{
+			$diff = $uuse-$cuse;
+		}
+		$range = $diff*0.85;
+		// checks if the average is within 80% of the max/min
+		if ($avec>(($range*0.8)+$cuse)
+		{
+			$newc, $newo = calc_new_readings($cuse, $uuse, $avec, $aveu, $countc);
+		}
+		if ($avec<($cuse-($range*0.8))
+		{
+			$newc, $newo = calc_new_readings($cuse, $uuse, $avec, $aveu, $countc);
+		}
+		if ($aveu>(($range*0.8)+$uuse)
+		{
+			$newc, $newo = calc_new_readings($cuse, $uuse, $avec, $aveu, $countc);
+		}
+		if ($aveu<($uuse-($range*0.8))
+		{
+			$newc, $newo = calc_new_readings($cuse, $uuse, $avec, $aveu, $countc);
 		}
 	}
 	
@@ -100,6 +249,7 @@
 	//$q = "SELECT * FROM sensor_data";
 	//$r = $db->query($q);
 	$mydat = load_data();
+	get_ranges($mydat,0,0);
 	//~ while ($row = $r->fetch_assoc())
 	//~ {
 		//~ if ($row['sType'] == 'Gate')
@@ -108,5 +258,5 @@
 			//~ 
 		//~ }
 	//~ }
-	print_r($mydat);
+	//~ print_r($mydat);
 ?>
