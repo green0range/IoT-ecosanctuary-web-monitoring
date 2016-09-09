@@ -67,24 +67,11 @@
 		}
 	}
 	
-	function save_data($lines, $checkvalue, $checktype)
-	{
-		$buffer = '#gate data file, this is used by the gate magnetic tracker DO NOT MODIFIY, DO NOT DELETE.\n';
-		for ($i=0;$i<sizeof($lines);$i++) 
-		{
-			$buffer.=$lines[$i].'\n';
-		}
-		$f = fopen('gate.php', 'w');
-		fwrite($f, $buffer); 
-		fclose($f);
-	}
-	
 	function calc_new_readings($oldc, $oldu, $avec, $aveu, $count)
 	{
 		if ($count < 50)
 		{
-			$r = array($oldc, $oldu);
-			return $r;
+			return -1; // the code for "nothing changed"
 		}
 		else
 		{
@@ -244,6 +231,7 @@
 		{
 			$new = calc_new_readings($cuse, $uuse, $avec, $aveu, $countc);
 		}
+		print_r($new);
 		//checks values
 		$status = 'o';
 		if (($uuse+$range)>$checkvalue)
@@ -265,7 +253,6 @@
 		print_r($dat);
 		for($i=0;$i<sizeof($dat);$i++)
 		{
-			print_r($dat[$i]);
 			for ($j=0;$j<sizeof($dat[$i]);$j++)
 			{
 				$fbuffer .= $dat[$i][$j];
@@ -275,28 +262,44 @@
 				}
 				
 			}
-			$fbuffer .="\n";
+			if ($i!=(sizeof($dat)-1)) // stops empty line being added at the end of the file
+			{
+				$fbuffer .="\n";
+			}
 		}
+		if ($new!=-1)
+			{
+				$fbuffer .= "\n!reinit\nrc:".$new[0]."\nru:".$new[1]."\n!";
+			}
 		echo $fbuffer;
 		$f = fopen('gate.dat', 'w');
 		fwrite($f, $fbuffer);
 		fclose($f);
+		return $status;
 	}
 	
 	
 	// main program, always executes
-	//$db = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
-	//$q = "SELECT * FROM sensor_data";
-	//$r = $db->query($q);
-	$mydat = load_data();
-	get_ranges($mydat,3);
-	//~ while ($row = $r->fetch_assoc())
-	//~ {
-		//~ if ($row['sType'] == 'Gate')
-		//~ {
-			//~ // find the latest gate reading, compare /w thresholds
-			//~ 
-		//~ }
-	//~ }
-	//~ print_r($mydat);
+	$db = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
+	$q = "SELECT * FROM sensor_data";
+	$r = $db->query($q);
+	$checkv = -1;
+	while ($row = $r->fetch_assoc())
+	{
+		if ($row['sType'] == 'Gate')
+		{
+			// find the latest gate reading, compare /w thresholds
+			if ($row['data'] == '')
+			{
+				$checkv = $row['sValue'];
+			}
+		}
+	}
+	if ($checkv!=-1)
+	{
+		$mydat = load_data();
+		$data = get_ranges($mydat,$checkv);
+		$q = "INSERT INTO sensor_data (`data`) VALUES ('".$data."')";
+		$db->query($q);
+	}
 ?>

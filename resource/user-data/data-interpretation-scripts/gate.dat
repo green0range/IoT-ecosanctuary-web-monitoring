@@ -1,7 +1,13 @@
 #gate data file, this is used by the gate magnetic tracker DO NOT MODIFIY, DO NOT DELETE.
+!init
 ic:39
 iu:20
-
-
-
-
+!
+!norop
+o:123
+o:123
+o:123
+o:123
+c:38
+c:39
+c:90
