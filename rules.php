@@ -362,7 +362,7 @@ $page_contents .="</p>
         <br>";
 		}
 	}else{
-		header("Location: http://greenorange.space/orokonui/resource/datahandling/submit.php?stage=1&ref=rules.php");
+		header("Location: resource/datahandling/submit.php?stage=1&ref=rules.php");
 	}
 ?>
 
