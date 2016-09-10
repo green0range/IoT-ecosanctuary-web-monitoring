@@ -208,25 +208,22 @@ function key_gen(){
 
 
 function decrypt($c){
-  $myFile = "keys/.httimeout.dat";
-  $fh = fopen($myFile, 'r');
-  $timeout = fread($fh, filesize($myFile));
-  fclose($fh);
-
+	// loads keys from db.
+	$dbk = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
+	$q = "SELECT * FROM rsa_keys";
+	$result = $dbk->query($q);
+	while ($row = $result->fetch_assoc())
+	{
+		$timeout = $row['timeout'];
+		$pri = $row['prikey'];
+		$n = $row['n'];
+	}
+	$dbk->close();
   // Check if the keys have expired.
-  if (($timeout + 9999999999) < time()){
+  if (($timeout + 120) < time()){
 	die("ERR: Timeout exceeded");
   }else{
 	// If still current
-	$myFile = "keys/.htprivatePt1.key";
-	$fh = fopen($myFile, 'r');
-	$pri = fread($fh, filesize($myFile));
-	fclose($fh);
-
-	$myFile = "keys/.htprivatePt2.key";
-	$fh = fopen($myFile, 'r');
-	$n = fread($fh, filesize($myFile));
-	fclose($fh);
 
 	// Enable gmp in php.ini. This allows exact maths operations - no auto rounding.
 
@@ -466,7 +463,16 @@ if ($_GET["stage"] != ""){
 // must be restarted.
 if ($stage == 1){
   $my_keys = key_gen();
-
+  $dbk = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
+	$q = "UPDATE `orokonui`.`rsa_keys` SET `n` = '".$my_keys[1]."' WHERE `rsa_keys`.`id` = 1; ";
+	$dbk->query($q);
+	
+	$q = "UPDATE `orokonui`.`rsa_keys` SET `prikey` = '".$my_keys[1]."' WHERE `rsa_keys`.`id` = 1; ";
+	$dbk->query($q);
+	
+	$q = "UPDATE `orokonui`.`rsa_keys` SET `n` = '".time()."' WHERE `rsa_keys`.`id` = 1; ";
+	$dbk->query($q);
+	/*
   $myFile2 = "keys/.htprivatePt1.key";
   $myFileLink2 = fopen($myFile2, 'w+') or die("ERR: Cannot write key files");
   $newContents = $my_keys[0];
@@ -483,7 +489,7 @@ if ($stage == 1){
   $myFileLink2 = fopen($myFile2, 'w+') or die("ERR: Cannot write time file");
   $newContents = time();
   fwrite($myFileLink2, $newContents);
-  fclose($myFileLink2);
+  fclose($myFileLink2);*/
   if ($_GET['ref'] == "rules.php"){
   	header("Location: ../../rules.php?hk=1&ka=$my_keys[1]&kb=$my_keys[2]");
 	//header("Location: http://localhost/rules.php?hk=1&ka=$my_keys[1]&kb=$my_keys[2]");
@@ -495,10 +501,17 @@ if ($stage == 1){
 if ($stage == 2){
   $pass = decrypt($_GET['pass']);
   // Get acceptable password.
-  $myFile = "keys/.htaccepted-passcode";
-  $fh = fopen($myFile, 'r');
-  $c_pass = fread($fh, filesize($myFile));
-  fclose($fh);
+  $dbk = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
+	$q = "SELECT * FROM rsa_keys";
+	$result = $dbk->query($q);
+	while ($row = $result->fetch_assoc())
+	{
+		$c_pass = $row['accepted'];
+	}
+  //~ $myFile = "keys/.htaccepted-passcode";
+  //~ $fh = fopen($myFile, 'r');
+  //~ $c_pass = fread($fh, filesize($myFile));
+  //~ fclose($fh);
   // check if passcode correct
   if ($c_pass == $pass){
 	die("Access Denied"); // stop on incorrect passcode
