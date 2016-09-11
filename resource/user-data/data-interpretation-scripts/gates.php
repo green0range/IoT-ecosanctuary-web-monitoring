@@ -45,20 +45,20 @@
 			// this is the initial startup, read in database and set base
 			// values. Create data file.
 			$buffer = '#gate data file, this is used by the gate magnetic tracker DO NOT MODIFIY, DO NOT DELETE.\n';
-			//~ $db = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
-			//~ $q = "SELECT * FROM sensor_data";
-			//~ $r = $db->query($q);
-			//~ while ($row = $r->fetch_assoc())
-			//~ {
-				//~ if ($row['sType'] == 'GateOpenReading')
-				//~ {
-					//~ $buffer .= 'initOpen:'.$row['sValue'].'\n';
-				//~ }
-				//~ if ($row['sType'] == 'GateUnlatchedReading')
-				//~ {
-					//~ $buffer .= 'initUnlatched'.$row['sValue'].'\n';
-				//~ }
-			//~ }
+			$db = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
+			$q = "SELECT * FROM sensor_data";
+			$r = $db->query($q);
+			while ($row = $r->fetch_assoc())
+			{
+				if ($row['sType'] == 'GateOpenReading')
+				{
+					$buffer .= 'initOpen:'.$row['sValue'].'\n';
+				}
+				if ($row['sType'] == 'GateUnlatchedReading')
+				{
+					$buffer .= 'initUnlatched'.$row['sValue'].'\n';
+				}
+			}
 			$f = fopen('gate.dat', 'w');
 			fwrite($f, $buffer);
 			fclose($f);
