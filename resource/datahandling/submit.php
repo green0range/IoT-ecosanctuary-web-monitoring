@@ -194,9 +194,9 @@ function key_gen(){
   global $tmp;
   // This generates an RSA pub/pri key pair.
   // https://en.wikipedia.org/wiki/RSA_%28cryptosystem%29#Example
-  generate_prime(2,16**2);
+  generate_prime(12**2,16**2);
   $primeA = $tmp;
-  generate_prime(2, 16**2);
+  generate_prime(12**2, 16**2);
   $primeB = $tmp;
   $n = gmp_mul($primeA, $primeB);
   $totient = gmp_mul(($primeA - 1), ($primeB - 1));
@@ -467,10 +467,10 @@ if ($stage == 1){
 	$q = "UPDATE `orokonui`.`rsa_keys` SET `n` = '".$my_keys[1]."' WHERE `rsa_keys`.`id` = 1; ";
 	$dbk->query($q);
 	
-	$q = "UPDATE `orokonui`.`rsa_keys` SET `prikey` = '".$my_keys[1]."' WHERE `rsa_keys`.`id` = 1; ";
+	$q = "UPDATE `orokonui`.`rsa_keys` SET `prikey` = '".$my_keys[0]."' WHERE `rsa_keys`.`id` = 1; ";
 	$dbk->query($q);
 	
-	$q = "UPDATE `orokonui`.`rsa_keys` SET `n` = '".time()."' WHERE `rsa_keys`.`id` = 1; ";
+	$q = "UPDATE `orokonui`.`rsa_keys` SET `timeout` = '".time()."' WHERE `rsa_keys`.`id` = 1; ";
 	$dbk->query($q);
 	/*
   $myFile2 = "keys/.htprivatePt1.key";
@@ -560,19 +560,24 @@ if ($stage == 2){
 if ($stage == 3){
   if ($_GET['act'] == "LOGIN"){
   $pass = decrypt($_GET['pass']);
-  $pass = hash('ripemd160', $pass);
+echo $pass."<br>";
+  //$pass = hash('ripemd160', $pass);
   //echo $pass . "<br>";
   // Get acceptable password.
   $db = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
-  $sql = "SELECT ac, session_id FROM rules_access";
+  $sql = "SELECT ac, session_id, salt FROM rules_access";
   $result = $db->query($sql);
   $i = 0;
   while($row = $result->fetch_assoc()){
 	if ($row['session_id'] == "-1"){ // neg1 is the access code for logins. 0+ is tokens for active users.
 		$c_pass = $row['ac'];
+		$salt = $row['salt'];
 	}
 	$i = $i+1;
   }
+echo $salt."<br>";
+  $pass = hash('ripemd160', $pass.$salt);
+echo $pass;
   // check if passcode correct
   if ($c_pass != $pass){
 	log_rules("Failed login attempt from ip " . $_SERVER['REMOTE_ADDR']);

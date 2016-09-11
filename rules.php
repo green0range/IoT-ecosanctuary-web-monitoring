@@ -40,6 +40,7 @@
 						</p><br><br>
 						<p>To get started, click the relevant link on the sidebar acording to your need.
 						</p>
+						<br><br><p>Also, this page doesn't use cookies by default, but you can click this button for a auto access cookie, that will automatically log you in we using this computer on the same ip address. Since most are dynamic, you may need to re-enter it every day or so.<input type='submit' onclick='givecookie()'></input></p>
 					</div>
 				</div>
 				";
@@ -292,6 +293,7 @@ $page_contents .="</p>
                                         for (var i=0;i<ac_list.length;i++){
                                                 ac_num += (ac_list[i].charCodeAt()*i);
                                         }
+					alert(ac_num);
                                         var keypt1 = " . $_GET['kb'] . ";
                                         var keypt2 = " . $_GET['ka'] . ";
                                         var oac_c = math.mod(math.pow(math.bignumber(ac_num), math.bignumber(keypt1)), math.bignumber(keypt2));
@@ -334,6 +336,8 @@ $page_contents .="</p>
 	<div id='warning'><p>Since this is not implimented, for testing anyone can login with the access code 'x'. No quotes marks.</p></div>
         <br>
 		<script>
+			'use strict';
+
 			math.config({
 				number: 'BigNumber', // Default type of number:
 									 // 'number' (default), 'BigNumber', or 'Fraction'
@@ -344,11 +348,12 @@ $page_contents .="</p>
 					var ac_list = ac.value.split('');
 					var ac_num = 0;
 					for (var i=0;i<ac_list.length;i++){
-						ac_num += (ac_list[i].charCodeAt()*i);
+						ac_num += (ac_list[i].charCodeAt()+(i));
 					}
 					//alert(ac_num);
 					var keypt1 = " . $_GET['kb'] . ";
 					var keypt2 = " . $_GET['ka'] . ";
+					//var ac_c = math.bignumber(ac_num).pow(keypt1).mod(keypt2);
 					var ac_c = math.mod(math.pow(math.bignumber(ac_num), math.bignumber(keypt1)), math.bignumber(keypt2));
 					//var ac_c = Math.pow(" . $_GET['ka'] . ",ac_num)%". $_GET['kb'] . ";
 					//alert(ac_c);
