@@ -292,6 +292,7 @@
 			if ($row['data'] == '')
 			{
 				$checkv = $row['sValue'];
+				$check_id = $row['id'];
 			}
 		}
 	}
@@ -299,7 +300,8 @@
 	{
 		$mydat = load_data();
 		$data = get_ranges($mydat,$checkv);
-		$q = "INSERT INTO sensor_data (`data`) VALUES ('".$data."')";
+		$q = "UPDATE `orokonui`.`sensor_data` SET `data` = 'o' WHERE `sensor_data`.`id` = ".$check_id;
+		//$q = "INSERT INTO sensor_data (`data`) VALUES ('".$data."')";
 		$db->query($q);
 	}
 ?>

@@ -40,7 +40,16 @@
 						</p><br><br>
 						<p>To get started, click the relevant link on the sidebar acording to your need.
 						</p>
-						<br><br><p>Also, this page doesn't use cookies by default, but you can click this button for a auto access cookie, that will automatically log you in we using this computer on the same ip address. Since most are dynamic, you may need to re-enter it every day or so.<input type='submit' onclick='givecookie()'></input></p>
+						<br><br><p>Also, this page doesn't use cookies by default, but you can click this button for a auto access cookie, that will automatically log you in we using this computer on the same ip address. Since most are dynamic, you may need to re-enter it every day or so.<input type='submit' onclick='givecookie()' value='Give me a cookie!'></input></p>
+						<script>
+							function givecookie()
+							{
+								var d = new Date();
+								d.setTime(d.getTime()+2592000000);
+								document.cookie = 'autologintoken=".$_GET['token']."; expires='+d.toUTCString();
+								document.cookie = 'autologinid=".$_GET['session']."; expires='+d.toUTCString();
+							}
+						</script>
 					</div>
 				</div>
 				";
@@ -337,6 +346,29 @@ $page_contents .="</p>
         <br>
 		<script>
 			'use strict';
+			
+			// check for auto login cookies
+			function getCookie(cname) {
+				var name = cname + '=';
+				var ca = document.cookie.split(';');
+				for(var i = 0; i <ca.length; i++) {
+					var c = ca[i];
+					while (c.charAt(0)==' ') {
+						c = c.substring(1);
+					}
+					if (c.indexOf(name) == 0) {
+						return c.substring(name.length,c.length);
+					}
+				}
+				return "";
+			}
+			
+			var tok = getCookie('autologintoken');
+			var sess = getCookie('autologinsession_id');
+			if (tok!='')
+			{
+				document.location = 'rules.php?hk=1&token='+tok+'&session='&session='+sess+'&redirect=about:home&loginsrc=cookie';
+			}
 
 			math.config({
 				number: 'BigNumber', // Default type of number:
