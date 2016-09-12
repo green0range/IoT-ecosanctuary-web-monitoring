@@ -25,6 +25,8 @@
       <div id="status">
 <!-- Dynamic page -->
 <?php
+ini_set('display_errors', 'On');
+
 $errors = 0;
 $db = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
 $q = "SELECT * FROM rules";
@@ -62,12 +64,16 @@ function subVariables($text)
     $lng = array();
     $time = array();
     $allSensors = array();
+    $value = array();
+    $data = array();
     while ($row = $result->fetch_assoc())
     {
         array_push($lat, $row['lat']);
         array_push($lng, $row['lng']);
         array_push($sensor, $row['sType']);
         array_push($time, $row['time']);
+	array_push($value, $row['sValue']);
+	array_push($data, $row['data']);
     }
     $q = "SELECT * FROM sensor_config";
     $result = $dba->query($q);
@@ -108,18 +114,19 @@ function subVariables($text)
 							if ($tmp[2]==$sensor[$k])
 							{
 								//echo "found match";
-								if ($tmp[2]=='VALUE')
+								if ($tmp[3]=='DATA')
 								{
+									//echo "found all values";
 									$names="[";
-									for ($a=0;$a>sizeof($value);$a++)
+									for ($a=0;$a<sizeof($data);$a++)
 									{
-										if ($a==(sizeof($value)-1))
+										if ($a==(sizeof($data)-1))
 										{
-											$names .= "'".$value[$a]."'";
+											$names .= "'".$data[$a]."'";
 										}
 										else
 										{
-											$names .= "'".$value[$a]."', ";
+											$names .= "'".$data[$a]."', ";
 										}
 									}
 									$names .="]";
