@@ -99,72 +99,86 @@ function subVariables($text)
         if ($tmp[0]=="NODE")
         {
             for ($j=0;$j<sizeof($node);$j++)
-            {	/*
-		if ($tmp[1]=='all')
-		{
-			for ($k=0;$k<sizeof($sensor);$k++)
-                        {
-                                //echo $sensor[$k];
-                                if ($tmp[2]==$sensor[$k])
-                                {
-                                        //echo "found match";
-                                        if ($tmp[2]=='VALUE')
-                                        {
-                                                $stext[$i] = $value[$j];
-                                        }
-                                        elseif ($tmp[2]=='LAT')
-                                        {
-                                                $stext[$i] = $lat[$j];
-                                        }
-                                        elseif ($tmp[2]=='LNG')
-                                        {
-                                                $stext[$i] = $lng[$j];
-                                        }
-                                else
-                                {
-                                    $stext = "[ERROR; we couldn't find that, have a look at the docs, and if you want somethin$
-                                }
-                            }
-                        }
-		}
-		*/
+            {
+				if ($tmp[1]=='all')
+				{
+					for ($k=0;$k<sizeof($sensor);$k++)
+						{
+							//echo $sensor[$k];
+							if ($tmp[2]==$sensor[$k])
+							{
+								//echo "found match";
+								if ($tmp[2]=='VALUE')
+								{
+									$names="[";
+									for ($a=0;$a>sizeof($value);$a++)
+									{
+										if ($a==(sizeof($value)-1))
+										{
+											$names .= "'".$value[$a]."'";
+										}
+										else
+										{
+											$names .= "'".$value[$a]."', ";
+										}
+									}
+									$names .="]";
+									
+									$stext[$i] = $names;
+								}
+								/* TO ADD
+								elseif ($tmp[2]=='LAT')
+								{
+										$stext[$i] = $lat[$j];
+								}
+								elseif ($tmp[2]=='LNG')
+								{
+										$stext[$i] = $lng[$j];
+								}*/
+								else
+								{
+									$stext = "[ERROR; we couldn't find that, have a look at the docs, and if you want somethin";
+								}
+							}
+						}
+				}
                 if ($tmp[1]==$node[$j])
                 {
-		    if ($tmp[2]=="LAT")
-		    {
-			$stext[$i] = $lat[$j];
-		    }
-		    if ($tmp[2]=="LNG")
+				if ($tmp[2]=="LAT")
+				{
+				$stext[$i] = $lat[$j];
+				}
+				if ($tmp[2]=="LNG")
                     {
                         $stext[$i] = $lng[$j];
                     }
-		    else
-		    {
-                    	for ($k=0;$k<sizeof($sensor);$k++)
-                    	{
-				//echo $sensor[$k];
-                        	if ($tmp[2]==$sensor[$k])
-                        	{
-					//echo "found match";
-                            		if ($tmp[3]=='VALUE')
-                            		{
-                                		$stext[$i] = $value[$j];
-                            		}
-                            		elseif ($tmp[3]=='LAT')
-                           	 	{
-                           	 		$stext[$i] = $lat[$j];
-                            		}
-                            		elseif ($tmp[3]=='LNG')
-                            		{
-                                		$stext[$i] = $lng[$j];
-                            		}
-                            	else
-                            	{
-                            	    $stext = "[ERROR; we couldn't find that, have a look at the docs, and if you want something that's not here, feel free to make a suggestion!. Or submit a bug, it could be our side.]";
-                            	}
+				else
+				{
+                    for ($k=0;$k<sizeof($sensor);$k++)
+                    {
+					//echo $sensor[$k];
+                       	if ($tmp[2]==$sensor[$k])
+                       	{
+							//echo "found match";
+							if ($tmp[3]=='VALUE')
+							{
+								$stext[$i] = $value[$j];
+							}
+							elseif ($tmp[3]=='LAT')
+							{
+								$stext[$i] = $lat[$j];
+							}
+							elseif ($tmp[3]=='LNG')
+							{
+								$stext[$i] = $lng[$j];
+							}
+                            else
+                            {
+                                $stext = "[ERROR; we couldn't find that, have a look at the docs, and if you want something that's not here, feel free to make a suggestion!. Or submit a bug, it could be our side.]";
+                            }
                             }
                     	}
-		    }
+					}
                 }
             }
         }
