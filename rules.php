@@ -1,4 +1,5 @@
 <?php
+	ini_set('display_errors', 'On');
 	// This script gets a key pair from submit.php
 	if ($_GET['hk'] == 1){
 		if ($_GET['token'] != ""){
@@ -40,7 +41,7 @@
 						</p><br><br>
 						<p>To get started, click the relevant link on the sidebar acording to your need.
 						</p>
-						<br><br><p>Also, this page doesn't use cookies by default, but you can click this button for a auto access cookie, that will automatically log you in we using this computer on the same ip address. Since most are dynamic, you may need to re-enter it every day or so.<input type='submit' onclick='givecookie()' value='Give me a cookie!'></input></p>
+						<br><br><p>Also, this page doesn't use cookies by default, but you can click this button for an auto access cookie, (yum) that will automatically log you in when using this computer on the same ip address. Since most ip address are dynamic, and orokouni monitoring uses a token system based on a salted hash of your ip address, you may still need to re-enter it every day or so. <input type='submit' onclick='givecookie()' value='Give me a cookie!'></input></p>
 						<script>
 							function givecookie()
 							{
@@ -94,8 +95,9 @@
 					<br><form action='" . $links_auth . "&redirect=config:sensors&act=ADD_SENSOR' method='post'>
 						Sensor: <select name='oid'>
 							<option>New</option>";
-							$result = $db->query($q);
-                                        		while($row = $result->fetch_assoc()){
+							$q = "SECLECT sensor_id FROM sensor_config";
+							$r = $db->query($q);
+							while($row = $result->fetch_assoc()){
                                                 		$page_contents .= "<option>" . $row['sensor_id'] . "</option>";
 	                                		}
 						$db->close();
@@ -108,12 +110,12 @@
 					<br>
 					<p>Current Sensor types:</p>
 					<table><hr><th>id</th><th>name</th></hr>";
-					$db = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
-                                        if ($db->connect_error){die("Cannot connect to database.");}
-                                        $q = "SELECT idnum, name FROM sensor_types";
-                                        $result = $db->query($q);
-                                        while($row = $result->fetch_assoc()){
-                                                $page_contents .= "<tr><td>" . $row['idnum'] . "</td>" . "<td>" . $row['name'] . "</td></tr>";
+					$dbn = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
+                                        if ($dbn->connect_error){die("Cannot connect to database.");}
+                                        $qu = "SELECT idnum, name FROM sensor_types";
+                                        $res = $dbn->query($qu);
+                                        while($ro = $res->fetch_assoc()){
+                                                $page_contents .= "<tr><td>" . $ro['idnum'] . "</td>" . "<td>" . $ro['name'] . "</td></tr>";
                                         }
                                         $page_contents .="</table><br>
 					<br><form action='" . $links_auth . "&redirect=config:sensors&act=SENSOR_TYPE' method='post'>
@@ -360,14 +362,14 @@ $page_contents .="</p>
 						return c.substring(name.length,c.length);
 					}
 				}
-				return "";
+				return '';
 			}
 			
 			var tok = getCookie('autologintoken');
-			var sess = getCookie('autologinsession_id');
+			var sess = getCookie('autologinid');
 			if (tok!='')
 			{
-				document.location = 'rules.php?hk=1&token='+tok+'&session='&session='+sess+'&redirect=about:home&loginsrc=cookie';
+				document.location = 'rules.php?hk=1&token='+tok+'&session='+sess+'&redirect=about:home&loginsrc=cookie';
 			}
 
 			math.config({

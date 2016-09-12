@@ -99,7 +99,35 @@ function subVariables($text)
         if ($tmp[0]=="NODE")
         {
             for ($j=0;$j<sizeof($node);$j++)
-            {
+            {	/*
+		if ($tmp[1]=='all')
+		{
+			for ($k=0;$k<sizeof($sensor);$k++)
+                        {
+                                //echo $sensor[$k];
+                                if ($tmp[2]==$sensor[$k])
+                                {
+                                        //echo "found match";
+                                        if ($tmp[2]=='VALUE')
+                                        {
+                                                $stext[$i] = $value[$j];
+                                        }
+                                        elseif ($tmp[2]=='LAT')
+                                        {
+                                                $stext[$i] = $lat[$j];
+                                        }
+                                        elseif ($tmp[2]=='LNG')
+                                        {
+                                                $stext[$i] = $lng[$j];
+                                        }
+                                else
+                                {
+                                    $stext = "[ERROR; we couldn't find that, have a look at the docs, and if you want somethin$
+                                }
+                            }
+                        }
+		}
+		*/
                 if ($tmp[1]==$node[$j])
                 {
 		    if ($tmp[2]=="LAT")
@@ -118,15 +146,15 @@ function subVariables($text)
                         	if ($tmp[2]==$sensor[$k])
                         	{
 					//echo "found match";
-                            		if ($tmp[2]=='VALUE')
+                            		if ($tmp[3]=='VALUE')
                             		{
                                 		$stext[$i] = $value[$j];
                             		}
-                            		elseif ($tmp[2]=='LAT')
+                            		elseif ($tmp[3]=='LAT')
                            	 	{
                            	 		$stext[$i] = $lat[$j];
                             		}
-                            		elseif ($tmp[2]=='LNG')
+                            		elseif ($tmp[3]=='LNG')
                             		{
                                 		$stext[$i] = $lng[$j];
                             		}
@@ -142,12 +170,19 @@ function subVariables($text)
         }
         if ($tmp[0]=="GET_NODES")
         {
-            $names="(";
+            $names="[";
             for ($j=0;$j<sizeof($node);$j++)
             {
-                $names .= "'".$node[$j]."',";
+		if ($j==(sizeof($node)-1))
+		{
+			$names .= "'".$node[$j]."'";
+		}
+		else
+		{
+                	$names .= "'".$node[$j]."',";
+		}
             }
-            $names.=")";
+            $names.="]";
             $stext[$i]=$names;
         }
         if ($tmp[0]=="GET_SENSORS")
