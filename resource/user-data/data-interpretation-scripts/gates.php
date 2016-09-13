@@ -262,11 +262,8 @@
 				}
 				
 			}
-			if ($i!=(sizeof($dat)-1)) // stops empty line being added at the end of the file
-			{
-				$fbuffer .="\n";
-			}
 		}
+		$fbuffer .= $status.":"$checkvalues;
 		if ($new!=-1)
 			{
 				$fbuffer .= "\n!reinit\nrc:".$new[0]."\nru:".$new[1]."\n!";
