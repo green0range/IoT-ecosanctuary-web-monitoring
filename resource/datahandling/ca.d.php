@@ -1,4 +1,5 @@
 <?php
+ini_set('display_errors', 'On');
 date_default_timezone_set("Pacific/Auckland");
 include 'submit.php';
 
@@ -79,6 +80,7 @@ $posts = scandir($dir);
 for ($i=0;$i<sizeof($posts);$i++){
 	if (strpos($posts[$i], '.php')!== false)
 	{
+		echo $dir.$posts[$i];
 		echo exec("php ".$dir.$posts[$i]);
 	}
 }

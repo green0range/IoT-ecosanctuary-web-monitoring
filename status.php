@@ -51,6 +51,23 @@ while ($row = $result->fetch_assoc())
 	array_push($msg, $row['message']);
 }
 
+class Timesort
+{
+	private $time = array();
+	private $latlng = array();
+	private $builder = array();
+
+	function get_latest($item, $row)
+	{
+		array_push($time, $row['time']);
+		array_push($node, $row['lat'].$row['lng']);
+		for ($i=0;$i<sizeof($time);$i++)
+		{
+			
+		}
+	}
+}
+
 function subVariables($text)
 {
 	//echo 'entered var sub';
@@ -66,6 +83,8 @@ function subVariables($text)
     $allSensors = array();
     $value = array();
     $data = array();
+    $last_time = 0;
+    $last_type = "";
     while ($row = $result->fetch_assoc())
     {
         array_push($lat, $row['lat']);
@@ -73,7 +92,8 @@ function subVariables($text)
         array_push($sensor, $row['sType']);
         array_push($time, $row['time']);
 	array_push($value, $row['sValue']);
-	array_push($data, $row['data']);
+	// get last data result
+		array_push($data, $row['data']);
     }
     $q = "SELECT * FROM sensor_config";
     $result = $dba->query($q);

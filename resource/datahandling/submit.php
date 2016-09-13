@@ -513,7 +513,7 @@ if ($stage == 2){
   //~ $c_pass = fread($fh, filesize($myFile));
   //~ fclose($fh);
   // check if passcode correct
-  if ($c_pass == $pass){
+  if ($c_pass != $pass){
 	die("Access Denied"); // stop on incorrect passcode
   }else{
 	// countunie
