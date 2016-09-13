@@ -85,6 +85,20 @@ for ($i=0;$i<sizeof($datatime);$i++)
 }
 
 //list of nodes
+// gets the hr names
+$dba = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
+$q = "SELECT * FROM sensor_config";
+    $result = $dba->query($q);
+    while ($row = $result->fetch_assoc())
+    {
+        for ($i=0;$i<sizeof($node_order);$i++)
+        {
+            if($node_order[$i]==$row['lat'].$row['lng'])
+	    {
+		$node_order[$i] = $row['hr_name'];
+	    }
+	}
+    }
 echo "var di_nodes = [";
 for ($i=0;$i<sizeof($node_order);$i++)
 {
