@@ -1,4 +1,4 @@
-<?php 
+<?php
 	/*
 	 * This file is two things:
 	 * 
@@ -207,7 +207,7 @@
 		if ($cuse>$uuse)
 		{
 			$diff = $cuse-$uuse;
-		} 
+		}
 		else
 		{
 			$diff = $uuse-$cuse;
@@ -260,17 +260,20 @@
 				{
 					$fbuffer .= ":";
 				}
-				
+				else
+				{
+					$fbuffer .="\n";
+				}
 			}
 		}
-		$fbuffer .= $status.":"$checkvalues;
+		$fbuffer .= $status.":".$checkvalues;
 		if ($new!=-1)
 			{
 				$fbuffer .= "\n!reinit\nrc:".$new[0]."\nru:".$new[1]."\n!";
 			}
 		echo $fbuffer;
 		$f = fopen('gate.dat', 'w');
-		fwrite($f, $fbuffer);
+		fwrite($f, $fbuffer) or die("error writting file");
 		fclose($f);
 		return $status;
 	}
