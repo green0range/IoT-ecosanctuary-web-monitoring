@@ -415,6 +415,8 @@ if (selectedTypes[4] != "")
 						<img src="resource/options.png", title="Settings", width='64px', height='64px', onclick="settingsClick()">
 						<br><div id='help-button' onclick='settingsClick()'>Settings </div>
 					</div>
+				<div id="graphDiv" style="overflow: hidden; width: 50%;">
+					<!-- Graph options-->
 					<div id="options", style="width: 0px; float: right; overflow: hidden; align: right; height: 0px;">
 						<form style="display:inline;", method="post", action="optionsHandler.php?<?php echo $_SERVER["QUERY_STRING"]; ?>">
 							<!--Options
@@ -530,7 +532,6 @@ if (selectedTypes[4] != "")
 						<hr>
 					</div>
 				</div>
-				<div id="graphDiv" style="overflow: hidden; width: 50%;">
 					<!--Graph data here-->
 					<canvas id="graph"height="<?php echo $canvasy + 5; ?>" width="25%"></canvas>
 					<div id="graph.key" style="width: 0px; overflow: hidden;">
