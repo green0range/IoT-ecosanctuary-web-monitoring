@@ -329,6 +329,7 @@ function getcrit($time, $lat, $lng, $value, $type, $repeat){
 	$eTime = array();
 	$delay = array();
 	$ruleid = array();
+	$data_value = array();
 	while ($row = $result->fetch_assoc()){
 		array_push($ruleid, $row['id']);
                 array_push($nodes, $row['node']);
@@ -340,6 +341,15 @@ function getcrit($time, $lat, $lng, $value, $type, $repeat){
 		array_push($sTime, $row['start_time']);
 		array_push($eTime, $row['end_time']);
 		array_push($delay, $row['delay']);
+		array_push($data_value, $row['data']);
+	}
+	for ($i=0;$i<sizeof($data_value);$i++)
+	{
+		if ($data_value[$i] !== "")
+		{
+			// replaces raw values with interpreted values if aviable.
+			$rvalue[$i] == $data_value[$i]
+		}
 	}
 	$alerts = array();
 	$q = "SELECT * FROM sensor_config";
@@ -713,7 +723,7 @@ echo $pass;
 		log_rules("Incorrect hash for " . $_SERVER['REMOTE_ADDR'] ."/". $_GET['token'] . "/" . $_GET[session] .". Attempted act: " . $_GET['act']);
 		header("HTTP/1.0 418 I'm a teapot");
 		echo "<h1>418: I'm a teapot!</h1>";
-		echo "<p>During an <strong>authentication error</strong>, this server has been turned into a teapot.</p>";
+		echo "<p>During an <strong>authentication error</strong>, this server has been turned into a teapot.</p><br><br><p>If you used an auto loggin cookie, your ip address has probably change, rendering it invalid. In this case, you will need to delete cookies to continue.</p>";
 	}
 	$db->close();
 }
