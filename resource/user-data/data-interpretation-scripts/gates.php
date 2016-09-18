@@ -1,4 +1,6 @@
 <?php
+ 
+ini_set('display_errors', 'On');
 	/*
 	 * This file is two things:
 	 * 
@@ -43,11 +45,11 @@
 		else
 		{
 			// this is the initial startup, read in database and set base
-			// values. Create data file.
+			// values. Create data file
 			$buffer = '#gate data file, this is used by the gate magnetic tracker DO NOT MODIFIY, DO NOT DELETE.\n';
-			$db = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
+			$dbi = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
 			$q = "SELECT * FROM sensor_data";
-			$r = $db->query($q);
+			$r = $dbi->query($q);
 			while ($row = $r->fetch_assoc())
 			{
 				if ($row['lat'].$row['lng'] == $node)
@@ -62,11 +64,12 @@
 					}
 				}
 			}
-			$f = fopen($node.'gate.dat', 'w');
+			$dbi->close();
+			$f = fopen($node.'.gate.dat', 'w');
 			fwrite($f, $buffer);
 			fclose($f);
 			// load newly created dat file
-			load_data();
+			load_data($node);
 		}
 	}
 	
@@ -280,8 +283,7 @@
 		fclose($f);
 		return $status;
 	}
-	
-	
+
 	// main program, always executes
 	$db = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
 	$q = "SELECT * FROM sensor_data";
@@ -295,20 +297,25 @@
 			// find the latest gate reading, compare /w thresholds
 			if ($row['data'] == '')
 			{
-				$tmp = array($row['lat'].$row['lng'], $row['sValue'], $row['id'])
+				$tmp = array($row['lat'].$row['lng'], $row['sValue'], $row['id']);
 				array_push($gates_to_check, $tmp);
 				//~ $checkv = $row['sValue'];
 				//~ $check_id = $row['id'];
 			}
 		}
+		//print_r($gates_to_check);
 	}
+	$db->close();
 	for ($i=0;$i<sizeof($gates_to_check);$i++)
 	{
 		$mydat = load_data($gates_to_check[$i][0]);
 		$data = get_ranges($mydat,$gates_to_check[$i][1]);
+		$db = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
+        	$q = "SELECT * FROM sensor_data";
 		$q = "UPDATE `orokonui`.`sensor_data` SET `data` = 'o' WHERE `sensor_data`.`id` = ".$gates_to_check[$i][2];
 		//$q = "INSERT INTO sensor_data (`data`) VALUES ('".$data."')";
 		$db->query($q);
+		$db->close();
 	}
 	//~ if ($checkv!=-1)
 	//~ {
