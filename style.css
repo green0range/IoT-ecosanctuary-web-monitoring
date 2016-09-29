@@ -26,6 +26,12 @@ padding: 0;
 	background-color: #F2DE41;
 }
 
+#graphDiv {
+	overflow: hidden;
+	width: 100%;
+	height: 500px;
+}
+
 #status {
 	font-size: 3.35vmin;
 	font-family: 'Poiret One', cursive;
@@ -38,7 +44,7 @@ h1{
 #header {
 	font-family: 'Righteous', cursive;
 	text-align: right;
-	background-color: #549e2b;
+	background-color: #447700;
 	overflow:hidden;
 	 margin: 0,0,0,0;
 }

@@ -59,7 +59,7 @@
 		//@mysqli_select_db("orakanui");
 		// Add error handler here
 		if ($db->connect_error) {
-			//die("Connection failed: " . $db->connect_error);
+			die("Sorry, we were unable to connect to the database backend. Please contact your sysadmin or wemaster and alert them to this problem.");
 		}
 		else{
 			//echo "connection successful.<br>";
@@ -227,7 +227,7 @@
 			$location = array($getLat, $getLng);
 		}
 
-		$sql = "SELECT sValue, time, sName, lat, lng, sType FROM sensor_data";
+		$sql = "SELECT sValue, time, lat, lng, sType FROM sensor_data";
 		$result = $db->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -266,6 +266,9 @@
 				if ((! in_array($row['lat'], $lat)) or (! in_array($row['lng'], $lng))){ // Check not already accounted for
 					array_push($lat, $row['lat']); // Add new lat
 					array_push($lng, $row['lng']);
+					echo 'added';
+				}else{
+					echo 'aready';
 				}
 			}
 		}
@@ -415,6 +418,8 @@ if (selectedTypes[4] != "")
 						<img src="resource/options.png", title="Settings", width='64px', height='64px', onclick="settingsClick()">
 						<br><div id='help-button' onclick='settingsClick()'>Settings </div>
 					</div>
+				<div id="graphDiv" style="overflow: hidden; height: 500px;">
+					<!-- Graph options-->
 					<div id="options", style="width: 0px; float: right; overflow: hidden; align: right; height: 0px;">
 						<form style="display:inline;", method="post", action="optionsHandler.php?<?php echo $_SERVER["QUERY_STRING"]; ?>">
 							<!--Options
@@ -529,10 +534,9 @@ if (selectedTypes[4] != "")
 						</form>
 						<hr>
 					</div>
-				</div>
-				<div id="graphDiv" style="overflow: hidden; width: 50%;">
 					<!--Graph data here-->
-					<canvas id="graph"height="<?php echo $canvasy + 5; ?>" width="25%"></canvas>
+                                        <canvas id="graph" height="<?php echo $canvasy + 5; ?>" width="25%"></canvas>
+				</div>
 					<div id="graph.key" style="width: 0px; overflow: hidden;">
 					<p><?php
 						for ($i=0;$i<sizeof($selectedTypes);$i++){

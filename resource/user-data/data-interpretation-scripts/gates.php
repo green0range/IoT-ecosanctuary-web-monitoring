@@ -1,4 +1,6 @@
-<?php 
+<?php
+ 
+ini_set('display_errors', 'On');
 	/*
 	 * This file is two things:
 	 * 
@@ -21,12 +23,12 @@
 	 * will not be accepted.
 	 */
 
-	function load_data()
+	function load_data($node)
 	{
-		if(file_exists('gate.dat'))
+		if(file_exists($node.'.gate.dat'))
 		{
-			$f = fopen('gate.dat', 'r');
-			$dat = fread($f, filesize('gate.dat'));
+			$f = fopen($node.'gate.dat', 'r');
+			$dat = fread($f, filesize($node.'gate.dat'));
 			fclose($f);
 			// reading in values
 			$dat = explode("\n", $dat);
@@ -43,27 +45,31 @@
 		else
 		{
 			// this is the initial startup, read in database and set base
-			// values. Create data file.
+			// values. Create data file
 			$buffer = '#gate data file, this is used by the gate magnetic tracker DO NOT MODIFIY, DO NOT DELETE.\n';
-			$db = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
+			$dbi = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
 			$q = "SELECT * FROM sensor_data";
-			$r = $db->query($q);
+			$r = $dbi->query($q);
 			while ($row = $r->fetch_assoc())
 			{
-				if ($row['sType'] == 'GateOpenReading')
+				if ($row['lat'].$row['lng'] == $node)
 				{
-					$buffer .= 'initOpen:'.$row['sValue'].'\n';
-				}
-				if ($row['sType'] == 'GateUnlatchedReading')
-				{
-					$buffer .= 'initUnlatched'.$row['sValue'].'\n';
+					if ($row['sType'] == 'GateClosedReading')
+					{
+						$buffer .= 'ic:'.$row['sValue'].'\n';
+					}
+					if ($row['sType'] == 'GateUnlatchedReading')
+					{
+						$buffer .= 'iu'.$row['sValue'].'\n';
+					}
 				}
 			}
-			$f = fopen('gate.dat', 'w');
+			$dbi->close();
+			$f = fopen($node.'.gate.dat', 'w');
 			fwrite($f, $buffer);
 			fclose($f);
 			// load newly created dat file
-			load_data();
+			load_data($node);
 		}
 	}
 	
@@ -207,7 +213,7 @@
 		if ($cuse>$uuse)
 		{
 			$diff = $cuse-$uuse;
-		} 
+		}
 		else
 		{
 			$diff = $uuse-$cuse;
@@ -260,30 +266,30 @@
 				{
 					$fbuffer .= ":";
 				}
-				
-			}
-			if ($i!=(sizeof($dat)-1)) // stops empty line being added at the end of the file
-			{
-				$fbuffer .="\n";
+				else
+				{
+					$fbuffer .="\n";
+				}
 			}
 		}
+		$fbuffer .= $status.":".$checkvalues;
 		if ($new!=-1)
 			{
 				$fbuffer .= "\n!reinit\nrc:".$new[0]."\nru:".$new[1]."\n!";
 			}
 		echo $fbuffer;
 		$f = fopen('gate.dat', 'w');
-		fwrite($f, $fbuffer);
+		fwrite($f, $fbuffer) or die("error writting file");
 		fclose($f);
 		return $status;
 	}
-	
-	
+
 	// main program, always executes
 	$db = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
 	$q = "SELECT * FROM sensor_data";
 	$r = $db->query($q);
 	$checkv = -1;
+	$gates_to_check = array();
 	while ($row = $r->fetch_assoc())
 	{
 		if ($row['sType'] == 'Gate')
@@ -291,17 +297,32 @@
 			// find the latest gate reading, compare /w thresholds
 			if ($row['data'] == '')
 			{
-				$checkv = $row['sValue'];
-				$check_id = $row['id'];
+				$tmp = array($row['lat'].$row['lng'], $row['sValue'], $row['id']);
+				array_push($gates_to_check, $tmp);
+				//~ $checkv = $row['sValue'];
+				//~ $check_id = $row['id'];
 			}
 		}
+		//print_r($gates_to_check);
 	}
-	if ($checkv!=-1)
+	$db->close();
+	for ($i=0;$i<sizeof($gates_to_check);$i++)
 	{
-		$mydat = load_data();
-		$data = get_ranges($mydat,$checkv);
-		$q = "UPDATE `orokonui`.`sensor_data` SET `data` = 'o' WHERE `sensor_data`.`id` = ".$check_id;
+		$mydat = load_data($gates_to_check[$i][0]);
+		$data = get_ranges($mydat,$gates_to_check[$i][1]);
+		$db = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
+        	$q = "SELECT * FROM sensor_data";
+		$q = "UPDATE `orokonui`.`sensor_data` SET `data` = 'o' WHERE `sensor_data`.`id` = ".$gates_to_check[$i][2];
 		//$q = "INSERT INTO sensor_data (`data`) VALUES ('".$data."')";
 		$db->query($q);
+		$db->close();
 	}
+	//~ if ($checkv!=-1)
+	//~ {
+		//~ $mydat = load_data();
+		//~ $data = get_ranges($mydat,$checkv);
+		//~ $q = "UPDATE `orokonui`.`sensor_data` SET `data` = 'o' WHERE `sensor_data`.`id` = ".$check_id;
+		//~ //$q = "INSERT INTO sensor_data (`data`) VALUES ('".$data."')";
+		//~ $db->query($q);
+	//~ }
 ?>
