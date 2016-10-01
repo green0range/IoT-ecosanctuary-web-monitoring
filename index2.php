@@ -110,6 +110,8 @@
 	if ($_GET['lnclr4']!=""){$lineColour4 = $_GET['lnclr4'];}
 	if ($_GET['gridcolour']!=""){$gridColour = $_GET['gridcolour'];}
 	if ($_GET['keycolour']!=""){$keyColour = $_GET['keycolour'];}
+	
+	// #### START SECTION ####
 	//data
 	$db = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
 	$sql = "SELECT sValue, time, lat, lng, sType FROM sensor_data";
@@ -156,6 +158,64 @@
 		}
 	}
 	$db->close();
+	
+	// #### START SECTION ####
+	// Process time
+	function convert_am_pm_time($t)
+	{
+		if ($t=="midnight"){return 0;}
+		if ($t=="1am"){return 3600;}
+		if ($t=="2am"){return 3600*2;}
+		if ($t=="3am"){return 3600*3;}
+		if ($t=="4am"){return 3600*4;}
+		if ($t=="5am"){return 3600*5;}
+		if ($t=="6am"){return 3600*6;}
+		if ($t=="7am"){return 3600*7;}
+		if ($t=="8am"){return 3600*8;}
+		if ($t=="9am"){return 3600*9;}
+		if ($t=="10am"){return 3600*10;}
+		if ($t=="11am"){return 3600*11;}
+		if ($t=="midday"){return 3600*12;}
+		if ($t=="1pm"){return 3600*13;}
+		if ($t=="2pm"){return 3600*14;}
+		if ($t=="3pm"){return 3600*15;}
+		if ($t=="4pm"){return 3600*16;}
+		if ($t=="5pm"){return 3600*17;}
+		if ($t=="6pm"){return 3600*18;}
+		if ($t=="7pm"){return 3600*19;}
+		if ($t=="8pm"){return 3600*20;}
+		if ($t=="9pm"){return 3600*21;}
+		if ($t=="10pm"){return 3600*22;}
+		if ($t=="11pm"){return 3600*23;}
+	}
+	if ($_GET['start_date'] != ""){
+		$startTimeUNIX = strtotime($_GET['start_date']);
+		$startTimeUNIX .= convert_am_pm_time($_GET['start_time']);
+		echo $startTimeUNIX;
+		$startTimeEnabled = 5;
+	}
+	if ($_GET['end_date'] != ""){
+		$endTimeUNIX = strtotime($_GET['end_date']);
+		$endTimeUNIX .= convert_am_pm_time($_GET['end_time']);
+		echo $endTimeUNIX;
+		$endTimeEnabled = 5;
+    }
+    if($startTimeEnabled > 4){
+		for($i=0;$i<sizeof($seriesx);$i++){
+			if($seriesx[$i] < $startTimeUNIX){
+				$seriesx[$i] = null;
+				$seriesy[$i] = null;
+			}
+		}
+	}
+	if($endTimeEnabled > 4){
+		for($i=0;$i<sizeof($seriesx);$i++){
+			if($seriesx[$i] > $endTimeUNIX){
+				$seriesx[$i] = null;
+				$seriesy[$i] = null;
+			}
+		}
+	}
 	// makes the smallest point in time 0.
 	$lowest = 4294967296; //(2^32) - replace before 2038
 	if ($lowest>$seriesx[0]){$lowest=$seriesx[0];}
@@ -176,21 +236,22 @@
 		$seriesx[$i]=$seriesx[$i]-$lowest;
 	}
 	for ($i=0;$i<sizeof($seriesx2);$i++)
-        {
-                $seriesx2[$i]=$seriesx2[$i]-$lowest;
-        }
+    {
+		$seriesx2[$i]=$seriesx2[$i]-$lowest;
+    }
 	for ($i=0;$i<sizeof($seriesx3);$i++)
-        {
-                $seriesx3[$i]=$seriesx3[$i]-$lowest;
-        }
+    {
+		$seriesx3[$i]=$seriesx3[$i]-$lowest;
+    }
 	for ($i=0;$i<sizeof($seriesx3);$i++)
-        {
-                $series3[$i]=$seriesx3[$i]-$lowest;
-        }
+    {
+		$series3[$i]=$seriesx3[$i]-$lowest;
+    }
 	for ($i=0;$i<sizeof($seriesx4);$i++)
-        {
-                $seriesx4[$i]=$seriesx4[$i]-$lowest;
-        }
+    {
+		$seriesx4[$i]=$seriesx4[$i]-$lowest;
+    }
+    
 ?>
 
 <body onLoad="makeGraph()">
