@@ -51,23 +51,8 @@ while ($row = $result->fetch_assoc())
 	array_push($msg, $row['message']);
 }
 
-class Timesort
-{
-	private $time = array();
-	private $latlng = array();
-	private $builder = array();
-
-	function get_latest($item, $row)
-	{
-		array_push($time, $row['time']);
-		array_push($node, $row['lat'].$row['lng']);
-		for ($i=0;$i<sizeof($time);$i++)
-		{
-			
-		}
-	}
-}
-
+// substitution api has been replaced by resource/lib/dataintergration.php, which echos out pure javascript.
+/*
 function subVariables($text)
 {
 	//echo 'entered var sub';
@@ -161,7 +146,7 @@ function subVariables($text)
 								elseif ($tmp[2]=='LNG')
 								{
 										$stext[$i] = $lng[$j];
-								}*/
+								}//
 								else
 								{
 									$stext = "[ERROR; we couldn't find that, have a look at the docs, and if you want somethin";
@@ -248,6 +233,7 @@ function subVariables($text)
     }
     return $text;
 }
+*/
 
 $q = "SELECT hr_name, lat, lng FROM sensor_config";
 $result = $db->query($q);
@@ -277,33 +263,44 @@ while ($row = $result->fetch_assoc())
 			//echo "sesnor";
 			if ($sensor[$i] == $row['sType'])
 			{
-				array_push($Lvalue, $row['sValue']);
+				// replaces with interpretated data if there is some.
+				if ($row['data'] != "")
+				{
+					array_push($Lvalue, $row['data']);
+				}
+				else
+				{
+					array_push($Lvalue, $row['sValue']);
+				}
 				array_push($error_ids, $i);
 			}
 		}
 	}
 }
-
 //sort found errors
 for ($i=0;$i<sizeof($error_ids);$i++)
 {
-	if ($operation[$error_ids[$i]]=='Less than'){
+	for ($j=0;$j<sizeof($operation);$j++)
+	{
+	//echo $operation[$i];
+	if ($operation[$j]=='Less than'){
         	if ($value[$error_ids[$i]]>$Lvalue[$i]){
                 	$messages .="<h5 style='font-family: arial;'>".$msg[$error_ids[$i]]."</h5><br>";
                         $errors++;
                 }
-        }elseif ($operation[$error_ids[$i]]=='Equal to'){
+        }elseif ($operation[$j]=='Equal to'){
                 if ($value[$error_ids[$i]]==$Lvalue[$i]){
                       	$messages .="<h5 style='font-family: arial;'>".$msg[$error_ids[$i]]."</h5><br>";
                        	$errors++;
         	}
-        }elseif ($operation[$error_ids[$i]]=='Greater than'){
+        }elseif ($operation[$j]=='Greater than'){
 		//echo "<br><br>greater than " . $value[$error_ids[$i]] . " la la " . $Lvalue[$i];
                 if ($value[$error_ids[$i]]<$Lvalue[$i]){
                         $messages .="<h5 style='font-family: arial;'>".$msg[$error_ids[$i]]."</h5><br>";
                         $errors++;
                 }
         }
+	}
 }
 
 if ($errors==0)
@@ -323,7 +320,7 @@ while ($row = $result->fetch_assoc())
 {
 	if ($row['enabled']==1)
 	{
-        echo subVariables($row['html']);
+        	echo $row['html'];
 	}
 }
 //messages

@@ -3,8 +3,7 @@
     <title>Data - Orokonui monitoring</title>
   <!-- Import Styles CSS -->
     <?php
-      // Read user agent and detect if mobile or not.
-      /*
+      // Read user agent and detect if mobile or not
       if (strpos($_SERVER['HTTP_USER_AGENT'], "Mobile") > 0){ // CHANGE TO MOBILE
         if ($_GET['force_mode'] == 'DESKTOP'){
           echo "<link rel='stylesheet' type='text/css' href='../style.css'>";
@@ -18,7 +17,6 @@
           echo "<link rel='stylesheet' type='text/css' href='../style.css' media='screen and (min-device-width: 600px)'/>\n<link rel='stylesheet' type='text/css' href='mobile.css' media='screen and (max-device-width: 599px)'/>";
         }
       }
-      */
     ?>
   <!-- Font Import -->
     <link href='https://fonts.googleapis.com/css?family=Righteous' rel='stylesheet' type='text/css'>
@@ -43,10 +41,7 @@
         <div id="status">
             <h3>Status Page</h3>
             <p>The status page is a way to quickly see what is happening at the Orokonui
-              ecosantury. It titles the page with the real-time status, either Good, or Bad. If it is 'Good'
-              that means everything is functioning normally. If it is bad, there is an unresovled alert.
-              These alerts will show in red, and percist until the system detects them as resolved or an
-              administrator manually overrides them. To view the full system logs, click the [show full logs] button.
+              ecosantury. It shows a list of alerts, as definined by rules and can be customised to show anything else of interest using the dataintergration api. For more informaition about this, please see documentation.
             </p>
         </div>
         <div id="graphing">
@@ -63,12 +58,9 @@
             This will bring up an options dialogue.
             <img src="image-of-options-dialogue.png">
             To select different data from the sensor, tick the
-            data types you want under the variables section. You can also change the
-            colour of varause commpents, by inputing a base 16 number into the colour boxes.
-            The first 2 digits refer to red, and can be 00 to FF, digits 3 and 4 are blue,
-            and digits 5 and 6 are green.
+            data types you want under the variables section. You can also ajust the colours, by click the colour you would like or entering the colours hex value.
             <br><br>
-            To view data between a certain time, use the time section of the options dialogue as shown:
+            To view data between a certain time, use the time section of the options dialogue. Clicking the textbox will bring up a date picker and times can be selected hourly.
             <br><img src="how-to-use-time-parameters.png"><br>
             Other options are for customisation. All colour options need to be in hex format.<br><br>
             The Line Weight refers to the thickness ('weight') of the trend lines. This is a interger value
@@ -87,14 +79,14 @@
         <div id="table">
             <h3>Tables</h3>
             <p>After generating a graph on the data page, you will also see a table displaying the raw
-              data below the graph. This always you to see exact values, as well data that is not sutied for a graph.
+              data below the graph. This always you to see exact values, as well data that is not sutied for a graph. This will be sepporated into pages if the data in to large.
             </p>
         </div>
         <div id="csv">
             <h3>CSV Download</h3>
             <p>CSV stands for comma sepporated variables. It is raw data format, and allows you
               to download an view data in most spreadsheeting applications. Additionally is a very
-              easy format for programmictic analysis.
+              easy format for programmictic analysis. To download a CSV of the data simply select the node you want it for and click download.
             </p>
         </div>
         <div id="footer">

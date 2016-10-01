@@ -348,7 +348,7 @@ function getcrit($time, $lat, $lng, $value, $type, $repeat){
 		if ($data_value[$i] !== "")
 		{
 			// replaces raw values with interpreted values if aviable.
-			$rvalue[$i] == $data_value[$i]
+			$rvalue[$i] == $data_value[$i];
 		}
 	}
 	$alerts = array();
@@ -482,6 +482,8 @@ if ($stage == 1){
 	
 	$q = "UPDATE `orokonui`.`rsa_keys` SET `timeout` = '".time()."' WHERE `rsa_keys`.`id` = 1; ";
 	$dbk->query($q);
+	$q = "UPDATE `orokonui`.`rsa_keys` SET `pubkey` = '".$my_keys[2]."' WHERE `rsa_keys`.`id` = 1; ";
+        $dbk->query($q);
 	/*
   $myFile2 = "keys/.htprivatePt1.key";
   $myFileLink2 = fopen($myFile2, 'w+') or die("ERR: Cannot write key files");

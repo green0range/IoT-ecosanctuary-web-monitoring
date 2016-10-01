@@ -12,6 +12,8 @@
 	<link rel='stylesheet' type='text/css' href='resource/lib/Pikaday/css/pikaday.css'>
 
 	<?php
+	
+		ini_set('display_errors', 'On');
 		// Read user agent and detect if mobile or not.
 		if (strpos($_SERVER['HTTP_USER_AGENT'], "Mobile") > 0){ // CHANGE TO MOBILE
 			if ($_GET['force_mode'] == 'DESKTOP'){
@@ -63,8 +65,7 @@
 		}
 		else{
 			//echo "connection successful.<br>";
-		}
-		// get data
+		}		// get data
 		// Prepare arrays
 		$seriesy = array();
 		$seriesy1 = array();
@@ -93,7 +94,7 @@
 
 
 		$keyColour = '000000';
-		$gridColour = 'CCCCCC';
+		$gridColour = 'CC0000';
 		$xLabels = -1;
 		$yLabels = -1;
 
@@ -213,7 +214,17 @@
 		// Select data types, based on get:
 		$selectedTypes = array();
 		if ($_GET['type'] == ""){
-			array_push($selectedTypes, "temp"); // Default to temperature readings.
+			$db1 = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
+			$q = "SELECT sType FROM sensor_data";
+			$result = $db1->query($q);
+			while ($r = $result->fetch_assoc())
+			{
+				if (!in_array($r['sType'], $selectedTypes))
+				{
+					array_push($selectedTypes, $r['sType']); // Defaults to whatever to all types has records for
+				}
+			}
+			print_r($selectedTypes);
 		} else {
 			$selectedTypes = explode(",", $_GET['type']); // different data types sepportated by comma
 		}
@@ -418,9 +429,9 @@ if (selectedTypes[4] != "")
 						<img src="resource/options.png", title="Settings", width='64px', height='64px', onclick="settingsClick()">
 						<br><div id='help-button' onclick='settingsClick()'>Settings </div>
 					</div>
-				<div id="graphDiv" style="overflow: hidden; height: 500px;">
+				<div id="graphDiv" style="overflow: hidden; height: 700px;">
 					<!-- Graph options-->
-					<div id="options", style="width: 0px; float: right; overflow: hidden; align: right; height: 0px;">
+					<div id="options", style="overflow: hidden; width: 0px; float: right; align: right; height: 0px;">
 						<form style="display:inline;", method="post", action="optionsHandler.php?<?php echo $_SERVER["QUERY_STRING"]; ?>">
 							<!--Options
 

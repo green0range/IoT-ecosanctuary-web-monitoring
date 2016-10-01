@@ -27,9 +27,10 @@
 </head>
 <!-- php script here defines variables, see source.-->
 <?php
-	// #### SECTION START ####
+	ini_set('display_errors', True);
+	// #### SECTION~ START ####
 	// this script is to define variables with their default values. 
-	// A second script will asign given values later
+	// A second section will asign given values later
 	
 	// sensor positional and selection things
 	$lat = array();
@@ -37,15 +38,15 @@
 	$location = array(0,0);
 	$all_sensor_types = "Nothing Selected";
 	$nodeName = "No Node Selected";
-	$selectedTypes = array(1,0,0,0);
+	$selectedTypes = array();
 	$allTypes = array();
-	$seriesx = array(0,1,2,3);
+	$seriesx = array();
 	$seriesx1 = array();
 	$seriesx2 = array();
-	$series3 = array();
-	$series4 = array();
-	$seriesy = array(0,34,3,23);
-	$series1 = array();
+	$seriesx3 = array();
+	$seriesx4 = array();
+	$seriesy = array();
+	$seriesy1 = array();
 	$seriesy2 = array();
 	$seriesy3 = array();
 	$seriesy4 = array();
@@ -60,23 +61,136 @@
 	$lineColour4 = 'f17cb0';
 	$gridColour = 'aaaaaa';
 	$yLabels = 4;
-	$xLabels = 4;
-	$lineWeight = 3;
-	$pointSize = 2;
+	$xLabels = 3;
+	$lineWeight = 2;
+	$pointSize = 1;
 	$mobile = 0;
 	$lowest = 0;
 	$keyColour = '000000';
 	
-	// Tabel details
+	// Table details
 	$page = 0;
 	
 	
 	
-	
+	// #### START SECTION ####
 	// Asign to their given values
-	
-	//~ $all_sensor_types = $_GET['type'];
 
+	// graphing variables
+	if ($_GET['type'] != "")
+	{
+		$all_sensor_types = $_GET['type'];
+		$selectedTypes = explode(",", $all_sensor_types);
+	}
+	if ($_GET['lat']!=""){
+		$location = array($_GET['lat'], $_GET['lng']);
+	}
+	if ($_GET['xlbl']!="")
+	{
+		if ($_GET['xlbl']=="few"){$xLabels=2;}
+		if ($_GET['xlbl']=="normal"){$xLabels=4;}
+		if ($_GET['xlbl']=="lots"){$xLabels=6;}
+	}
+	if ($_GET['ylbl']!="")
+        {
+                if ($_GET['ylbl']=="few"){$yLabels=2;}
+                if ($_GET['ylbl']=="normal"){$yLabels=4;}
+                if ($_GET['ylbl']=="lots"){$yLabels=6;}
+        }
+	if ($_GET['lineweight']!="")
+	{
+		if ($_GET['lineweight']=="Thin"){$lineWeight=1;}
+                if ($_GET['lineweight']=="Medium"){$lineWeight=2;}
+                if ($_GET['lineweight']=="Thick"){$lineWeight=3;}
+	}
+	if ($_GET['lnclr0']!=""){$lineColour = $_GET['lnclr0'];}
+	if ($_GET['lnclr1']!=""){$lineColour1 = $_GET['lnclr1'];}
+	if ($_GET['lnclr2']!=""){$lineColour2 = $_GET['lnclr2'];}
+	if ($_GET['lnclr3']!=""){$lineColour3 = $_GET['lnclr3'];}
+	if ($_GET['lnclr4']!=""){$lineColour4 = $_GET['lnclr4'];}
+	if ($_GET['gridcolour']!=""){$gridColour = $_GET['gridcolour'];}
+	if ($_GET['keycolour']!=""){$keyColour = $_GET['keycolour'];}
+	//data
+	$db = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
+	$sql = "SELECT sValue, time, lat, lng, sType FROM sensor_data";
+	$result = $db->query($sql);
+	if ($result->num_rows > 0) {
+		while($row = $result->fetch_assoc()) {
+			if (($row['lat'] == $location[0]) and ($row['lng'] == $location[1])){
+				// colects all data types for type options menu
+				if (!(in_array($row['sType'], $allTypes, FALSE))){
+					array_push($allTypes, $row['sType']);
+				}
+				for ($i=0;$i<sizeof($selectedTypes);$i++){
+					if ($selectedTypes[$i] == $row['sType']){
+						if ($i == 0){
+							array_push($seriesy, $row["sValue"]);
+							array_push($seriesx, $row["time"]);
+						}
+						if ($i == 1){
+							array_push($seriesy1, $row["sValue"]);
+							array_push($seriesx1, $row["time"]);
+						}
+						if ($i == 2){
+							array_push($seriesy2, $row["sValue"]);
+							array_push($seriesx2, $row["time"]);
+						}
+						if ($i == 3){
+							array_push($seriesy3, $row["sValue"]);
+							array_push($seriesx3, $row["time"]);
+						}
+						if ($i == 4){
+							array_push($seriesy4, $row["sValue"]);
+							array_push($seriesx4, $row["time"]);
+						}
+					}
+				}
+			}
+			if ((! in_array($row['lat'], $lat)) or (! in_array($row['lng'], $lng))){ // Check not already accounted for
+				array_push($lat, $row['lat']); // Add new lat
+				array_push($lng, $row['lng']);
+				//echo 'added';
+			}else{
+				//echo 'aready';
+			}
+		}
+	}
+	$db->close();
+	// makes the smallest point in time 0.
+	$lowest = 4294967296; //(2^32) - replace before 2038
+	if ($lowest>$seriesx[0]){$lowest=$seriesx[0];}
+	if (sizeof($seriesx1)>1){
+		if ($lowest>$seriesx1[0]){$lowest=$seriesx1[0];}
+	}
+	if (sizeof($seriesx2)>1){
+		if ($lowest>$seriesx2[0]){$lowest=$seriesx2[0];}
+	}
+	if (sizeof($seriesx3)>1){
+		if ($lowest>$seriesx3[0]){$lowest=$seriesx3[0];}
+	}
+	if (sizeof($seriesx4)>1){
+		if ($lowest>$seriesx4[0]){$lowest=$seriesx4[0];}
+	}
+	for ($i=0;$i<sizeof($seriesx);$i++)
+	{
+		$seriesx[$i]=$seriesx[$i]-$lowest;
+	}
+	for ($i=0;$i<sizeof($seriesx2);$i++)
+        {
+                $seriesx2[$i]=$seriesx2[$i]-$lowest;
+        }
+	for ($i=0;$i<sizeof($seriesx3);$i++)
+        {
+                $seriesx3[$i]=$seriesx3[$i]-$lowest;
+        }
+	for ($i=0;$i<sizeof($seriesx3);$i++)
+        {
+                $series3[$i]=$seriesx3[$i]-$lowest;
+        }
+	for ($i=0;$i<sizeof($seriesx4);$i++)
+        {
+                $seriesx4[$i]=$seriesx4[$i]-$lowest;
+        }
 ?>
 
 <body onLoad="makeGraph()">
@@ -127,7 +241,7 @@
 						// gets hr sensor names
 						/*
 						 * Comment out for testing design on desktop,
-						 * Desktop has no server access, uncomment when on server>
+						 * Desktop has no server access, uncomment when on server>*/
 						$db = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
 						$q = "SELECT * FROM sensor_config";
 						$r = $db->query($q);
@@ -138,6 +252,7 @@
 								$nodeName = $row['hr_name'];
 							}
 						}
+						/*
 						$selected_str = $selectedTypes[0];
 						if (selectedTypes[1] != "")
 						{
@@ -154,8 +269,7 @@
 						if (selectedTypes[4] != "")
 						{
 								$selected_str .= ", ".$selectedTypes[4];
-						}
-						* */
+						}*/
 						?>
 							document.write("<h2><?php echo $all_sensor_types; ?> vs Time, for <?php echo $nodeName; ?> (<?php echo $location[0]; ?>, <?php echo $location[1]; ?>)");
 						}
@@ -176,7 +290,7 @@
 								<fieldset>
 								<legend>Time</legend>
 								<p><strong>Start:</strong></p>
-								<script src='http://128.199.181.173/resource/lib/Pikaday/pikaday.js'></script>
+								<script src='resource/lib/Pikaday/pikaday.js'></script>
 								<p>
 								<input id='start_date' name='start_date'></input>
 								<script>
@@ -248,7 +362,6 @@
 									<legend>Variables</legend>
 									<p>Tick the variables you want displayed.</p>
 									<?php
-										$allTypes = array("temperature", "rainfall");
 										for($i=0;$i<sizeof($allTypes);$i++){
 											if (in_array($allTypes[$i], $selectedTypes, FALSE)){
 												echo "<p>". $allTypes[$i] . " : &nbsp; &nbsp; &nbsp; <input type='checkbox' checked name='var$i'></input><div id='vardiv$i'><input type='text' id='lnclr$i' name='lnclr$i'></input></div>";
@@ -270,7 +383,7 @@
 									loadColourPicker(document.getElementById('key_col_div'), document.getElementById('key_colour'));
 									loadColourPicker(document.getElementById('grid_col_div'), document.getElementById('grid_colour'));
 								</script>
-								<p>Line weight:<select id='lineweight'><option name='1'>Thin</option><option name='2'>Meduim</option><option name='3'>Thick</option></select></p>
+								<p>Line weight:<select id='lineweight' name='lineweight'><option name='1'>Thin</option><option name='2'>Meduim</option><option name='3'>Thick</option></select></p>
 								<p>Number of x markers:
 									<select name="xlbl">
 										<option>few</option>
@@ -305,17 +418,17 @@
 								$tmp = $lineColour;
 							}
 							if ($i==1){
-                                $tmp = $lineColour1;
+                                				$tmp = $lineColour1;
 							}
 							if ($i==2){
 								$tmp = $lineColour2;
-                            }
+                            				}
 							if ($i==3){
-                                $tmp = $lineColour3;
-                            }
+                         			 	       $tmp = $lineColour3;
+                            				}
 							if ($i==4){
-                                $tmp = $lineColour4;
-                            }
+                                				$tmp = $lineColour4;
+                           			 	}
 							echo "<span style='color:$tmp;'>" . $selectedTypes[$i] . "</span><br>";
 						}
 					?></p>
@@ -423,29 +536,37 @@
 						}
 						echo "yseriescount++;";
 					}
-					if ($selectedTypes[1]){
-						for ($i=0;$i<sizeof($seriesy1);$i++){
-							echo "yseries1.push($seriesy1[$i]); xseries1.push($seriesx1[$i]);";
+					if (sizeof($selectedTypes)>1){
+						if ($selectedTypes[1]){
+							for ($i=0;$i<sizeof($seriesy1);$i++){
+								echo "yseries1.push($seriesy1[$i]); xseries1.push($seriesx1[$i]);";
+							}
+							echo "yseriescount++;";
 						}
-						echo "yseriescount++;";
-					}
-					if ($selectedTypes[2]){
-						for ($i=0;$i<sizeof($seriesy2);$i++){
-							echo "yseries2.push($seriesy2[$i]); xseries2.push($seriesx2[$i]);";
+						if (sizeof($selectedTypes)>2){
+							if ($selectedTypes[2]){
+								for ($i=0;$i<sizeof($seriesy2);$i++){
+									echo "yseries2.push($seriesy2[$i]); xseries2.push($seriesx2[$i]);";
+								}
+								echo "yseriescount++;";
+							}
+							if (sizeof($selectedTypes)>3){
+								if ($selectedTypes[3]){
+									for ($i=0;$i<sizeof($seriesy3);$i++){
+										echo "yseries3.push($seriesy3[$i]); xseries3.push($seriesx3[$i]);";
+									}
+									echo "yseriescount++;";
+								}
+								if (sizeof($selectedTypes)>4){
+									if ($selectedTypes[4]){
+										for ($i=0;$i<sizeof($seriesy4);$i++){
+											echo "yseries4.push($seriesy4[$i]); xseries4.push($seriesx4[$i]);";
+										}
+										echo "yseriescount++;";
+									}
+								}
+							}
 						}
-						echo "yseriescount++;";
-					}
-					if ($selectedTypes[3]){
-						for ($i=0;$i<sizeof($seriesy3);$i++){
-							echo "yseries3.push($seriesy3[$i]); xseries3.push($seriesx3[$i]);";
-						}
-						echo "yseriescount++;";
-					}
-					if ($selectedTypes[4]){
-						for ($i=0;$i<sizeof($seriesy4);$i++){
-							echo "yseries4.push($seriesy4[$i]); xseries4.push($seriesx4[$i]);";
-						}
-						echo "yseriescount++;";
 					}
 				?>
 				var plotsize = <?php echo $pointSize; ?>;
@@ -455,7 +576,7 @@
 				//alert(canvasx);
 				cd.font="15px Georgia";
 				cd.fillText("Time ->", canvasy, 0);
-				cd.fillStyle = "<?php echo $keyColour; ?>";
+				cd.fillStyle = "#<?php echo $keyColour; ?>";
 				// Finds the highest for each series
 				var highest = [0,0,0,0,0];
 				for (var i=0;i<yseriescount;i++){
@@ -463,6 +584,7 @@
 						for (var j=0;j<yseries.length;j++){
 							if (highest[i] < yseries[j]) {
 								highest[i] = yseries[j];
+								//alert(highest);
 							}
 						}
 					}
@@ -561,7 +683,7 @@
 						ylabels = i;
 				}
 				cd.beginPath();
-				cd.strokeStyle="<?php echo $gridColour; ?>";
+				cd.strokeStyle="#<?php echo $gridColour; ?>";
 				cd.lineWidth = 1;
 				for (var i=0;i<ylabels;i++) {
 					cd.moveTo(0, canvasy-(i*(canvasy/ylabels)));
@@ -581,7 +703,7 @@
 						xlabels = i;}
 				}
 				cd.beginPath();
-				cd.strokeStyle="<?php echo $gridColour; ?>";
+				cd.strokeStyle="#<?php echo $gridColour; ?>";
 				cd.lineWidth = 1;
 				for (var i=0;i<xlabels;i++) {
 					cd.moveTo(canvasx-(i*(canvasx/xlabels)), 0);

@@ -130,7 +130,7 @@ for ($i=0;$i<sizeof($allSensors);$i++)
 echo "var di_data = [";
 for ($i=0;$i<sizeof($added_data);$i++)
 {
-        if ($i!=sizeof($added_data)-1)
+        if ($i!=(sizeof($added_data)-1))
         {
 		echo "[";
                 for ($k=0;$k<3;$k++)
@@ -141,10 +141,9 @@ for ($i=0;$i<sizeof($added_data);$i++)
         		}
         		else
        			{
-                		echo "'".$added_data[$i][$k]."']";
+                		echo "'".$added_data[$i][$k]."'],";
 		        }
 		}
-		echo "], ";
         }
         else
         {
@@ -161,8 +160,8 @@ for ($i=0;$i<sizeof($added_data);$i++)
                                 echo "'".$added_data[$i][$k]."']";
                         }
                 }
+		echo "]";
         }
-	echo "]";
 }
 
 
