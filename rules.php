@@ -1,7 +1,7 @@
 <?php
 
 // notes: add calibrate option
-	ini_set('display_errors', 'On');
+	//ini_set('display_errors', 'On');
 	// This script gets a key pair from submit.php
 	if ($_GET['hk'] == 1){
 		if ($_GET['token'] != ""){

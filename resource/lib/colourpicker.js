@@ -11,7 +11,7 @@ Your done.
 */
 
 // colour credit: http://www.mulinblog.com/a-color-palette-optimized-for-data-visualization/
-var colours = ['#4d4d4d',
+var colours = ['4d4d4d',
 '5da5da',
 'faa43a',
 '60bd68',

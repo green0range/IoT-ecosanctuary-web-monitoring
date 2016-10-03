@@ -25,7 +25,7 @@
       <div id="status">
 <!-- Dynamic page -->
 <?php
-ini_set('display_errors', 'On');
+//ini_set('display_errors', 'On');
 
 $errors = 0;
 $db = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");

@@ -10,12 +10,6 @@
 	</head>
 	<body>
 
-		<!--Comment this out when system is complete. Uncomment during mainince-->
-		<div id="warning">
-			<p><strong>Wanring:</strong> This system is under development. Any data is likely to
-				be false test data. Any about information may refer to furture plans.</p>
-		</div>
-
 		<!--All body is in contents div, then applicable div, i.e header, map, etc.-->
 		<!--Contents sets up styling constants, i.e page with, while others setup styling
 		variables relevant to ech div, i.e text colour-->
@@ -48,7 +42,7 @@
                   <p>The temperature inside Tuatara borrows.</p>
                   <br>
                 </div>
-                <li>weather</li>
+                <li>Weather</li>
                 <div id="tabin">
                   <br>
                   <p>The weather of the area, this includes:
@@ -62,6 +56,7 @@
                   </p>
                   <br>
                 </div>
+		<li><p>Please note that these are not all sensor nodes are currently running. To see what is currently available, you can browse the data page.</p></li>
               </ul>
           </div>
           <br>
@@ -73,7 +68,7 @@
             and then puts it on this website for us all to learn from!</p>
             <br>
             <br>
-	<h3>And there's more!</h3>
+	<h3>The Source:</h3>
 	    <br>
 	The software behind this is Libre, meaning anyone with something to monitor can use it and adapt it for their own purposes, under the terms of the GPL3. I'd like to setup a database of ecostantuaries collecting data with this system, so that researcher can quickly and easily access a great sample, with all sorts or varible. If you would like to use this software, have a look below for the source. If you know of other ecostantuaries using it, add their site to the <a href='resource/not-yet.html'>wiki</a>, so that we can all see their results!
 	<br>

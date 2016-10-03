@@ -35,10 +35,10 @@
 	// sensor positional and selection things
 	$lat = array();
 	$lng = array();
-	$location = array(0,0);
+	$location = "not_set";
 	$all_sensor_types = "Nothing Selected";
 	$nodeName = "No Node Selected";
-	$selectedTypes = array();
+	$selectedTypes = array("null");
 	$allTypes = array();
 	$seriesx = array();
 	$seriesx1 = array();
@@ -110,7 +110,7 @@
 	if ($_GET['lnclr4']!=""){$lineColour4 = $_GET['lnclr4'];}
 	if ($_GET['gridcolour']!=""){$gridColour = $_GET['gridcolour'];}
 	if ($_GET['keycolour']!=""){$keyColour = $_GET['keycolour'];}
-	
+
 	// #### START SECTION ####
 	//data
 	$db = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
@@ -162,7 +162,7 @@
 	// Process time
 	function convert_am_pm_time($t)
 	{
-		if ($t=="midnight"){return 0;}
+		if ($t=="midnight (00:00)"){return 0;}
 		if ($t=="1am"){return 3600;}
 		if ($t=="2am"){return 3600*2;}
 		if ($t=="3am"){return 3600*3;}
@@ -174,7 +174,7 @@
 		if ($t=="9am"){return 3600*9;}
 		if ($t=="10am"){return 3600*10;}
 		if ($t=="11am"){return 3600*11;}
-		if ($t=="midday"){return 3600*12;}
+		if ($t=="midday (12:00)"){return 3600*12;}
 		if ($t=="1pm"){return 3600*13;}
 		if ($t=="2pm"){return 3600*14;}
 		if ($t=="3pm"){return 3600*15;}
@@ -362,7 +362,7 @@
 								</script>
 								</p>
 								<p><select id='start_time' name='start_time'>
-									<option>Midnight</option>
+									<option>Midnight (00:00)</option>
 									<option>1am</option>
 									<option>2am</option>
 									<option>3am</option>
@@ -374,7 +374,7 @@
 									<option>9am</option>
 									<option>10am</option>
 									<option>11am</option>
-									<option>Midday</option>
+									<option>Midday (12:00)</option>
 									<option>1pm</option>
 									<option>2pm</option>
 									<option>3pm</option>
@@ -393,7 +393,7 @@
 										var picker2 = new Pikaday({field:document.getElementById('end_date')});
 									</script>
 									<p><select name='end_time' id='end_time'>
-										<option>Midnight</option>
+										<option>Midnight (00:00)</option>
 										<option>1am</option>
 										<option>2am</option>
 										<option>3am</option>
@@ -405,7 +405,7 @@
 										<option>9am</option>
 										<option>10am</option>
 										<option>11am</option>
-										<option>Midday</option>
+										<option>Midday (12:00)</option>
 										<option>1pm</option>
 										<option>2pm</option>
 										<option>3pm</option>
@@ -774,13 +774,13 @@
 					cd.lineTo(canvasx-(i*(canvasx/xlabels)), canvasy);
 					cd.stroke();
 					var date = new Date(((longest-(i*(longest/xlabels)))+<?php echo $lowest; ?>)*1000);
-					var day = date.getDay();
+					var day = date.getDate();
 					var month = date.getMonth()+1; // Months are array with 0 offset
 					var year = date.getFullYear();
 					var hours = date.getHours();
 					var minutes = "0" + date.getMinutes();
 					var seconds = "0" + date.getSeconds();
-					var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2) + ' ' + day + '/' + month + '/' + year;
+					var formattedTime = hours + ':' + minutes.substr(-2) + ' ' + day + '/' + month + '/' + year;
 					// Detect if mobile
 					if(<?php echo $mobile;?> == 1){
 						cd.font = 'italic 40pt Calibri';
@@ -843,6 +843,13 @@
 				for (var i=0;i<yseries4.length;i++) {
 					cd.lineTo(xpoint4[i], ypoint4[i]);
 					cd.stroke();
+				}
+				// draw please select sensor sign
+				if (xseries.length==0)
+				{
+					cd.font="20px Georgia";
+					cd.fillText("Click the options button",50,25);
+					cd.fillText(" to select data types.", 50,50);
 				}
 			}else{ // If there is not set location
 				var container = document.getElementById("graphDiv");
