@@ -23,7 +23,6 @@
 						<a href='" . $links . "&redirect=config:numbers'>Contacts</a><br>
 						<a href='" . $links . "&redirect=config:status'>Status</a><br>
 						<a href='" . $links . "&redirect=config:datainterpretation'>Interpretation</a><br>
-						<a href='" . $links . "&redirect=about:config'>Setup</a><br>
 					</p>
 				</div>";
 			if ($_GET['redirect'] == "about:home"){
@@ -220,25 +219,8 @@ $page_contents .="</p>
       <input type='text'name='msg' size='80'></input><br><br></p>
       <input type='submit' value='Add alert. '></input>
 	<br><br>
-	<input type='checkbox' name='send_clear'></input> '];
+	<input type='checkbox' name='send_clear'></input> Send all clear?
 	<br><br>
-      <p><strong>Formating help: </strong>Any *-ed lines requires all fields filled.
-        Any other line requires either all or none but not partital filled fields<br><br>
-      For gates, an open gate is represented
-      by the value 1, and a closed gate is represented by 0. For temperature,
-      values are in degrees C. Windspeeds are in km/h. Time is in 24h time.<br><br>
-      You can add variables into the alert text (without quotes) using:<br>
-      '!value' : The value of the sensor activating the alert.<br>
-      '!time' : The time the threshold was crossed.<br>
-      '!current_time' : The time the alert is accually send. (Only different from !time if delay.)<br>
-      '!node_HR_name' : The nodes's human readable name.<br>
-      '!lat' : The latidude of the node<br>
-      '!lng' : The Longidute of the node<br><br>
-      You can also do basic arithmetic, with the following:
-      !Maths(operation) where the operation is with number +, -, *, / by number,
-      or nummeric variable with the same operators. Variables and hard-coded numbers can be mixed, times are also formated as numbers until final processing and can therefore also be added or subtracted. Multipling/dividing time is unwise, as it is in UNIX time format (very large number). Final processing will pharse time in 24h format, along with any arithmetic changes you have made to it. (eg; finding difference/delays)
-      If you do not indicate you want the server to calculate, it will phrase your expression as
-      a regular string.</p>
   </form>
 </div>";
 
@@ -291,7 +273,7 @@ $page_contents .="</p>
     <br><a href='resource/datahandling/status.log'>Download Rules Log</a>
 </div>";
 			}else if($_GET['redirect']=='about:config'){
-				$page_contents = $sidebar . "
+				/*$page_contents = $sidebar . "
 <div id='main'>
 	<script>
                         math.config({
@@ -335,7 +317,7 @@ $page_contents .="</p>
 		You can set backups to occur automatically after n data dumps. A data dump is when the collector upload any data to the server. The backup is done through a bash command you speify, be careful, you have the full power of the shell. If yon don't know what to done the default should be fine.</p>
 
 </div>
-				";
+				";*/
 			}else{
 				$page_contents = $sidebar . "<p>Sorry, we can't find that location. Try <a href='" . $links . "&redirect=about:home'>home</a>.</p>";
 			}
@@ -346,7 +328,6 @@ $page_contents .="</p>
         <br>
         <p>If you are on the Orokonui staff, please enter the staff access code below:</p>
         <br>
-	<div id='warning'><p>Since this is not implimented, for testing anyone can login with the access code 'x'. No quotes marks.</p></div>
         <br>
 		<script>
 			'use strict';
@@ -440,11 +421,5 @@ $page_contents .="</p>
 		<div id="content">
 			<?php echo $page_contents; ?>
 		</div>
-		<!--<div id="footer">
-				<hr>
-				<p>Design by <a href="https://twitter.com/WilliamSatterth">William Satterthwaite</a>, 2016. Fonts from <a href="https://www.google.com/fonts">google.com/fonts</a>, map from <a href="https://maps.google.com">maps.google.com</a>. All other context under
-				<a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons</a>.</p>
-				<br>
-		</div>-->
 	</body>
 </html>
