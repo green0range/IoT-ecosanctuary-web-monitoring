@@ -332,15 +332,6 @@ echo $messages;
 <!-- End dynatic section -->
 	</div>
 		</div>
-			<div id="footer">
-				<hr>
-				<a href="index.php#header">Home</a><br>
-				<a href="about.html">About</a><br>
-				<a href="phpmyadmin">DB Admin</a><br>
-				<hr>
-				<p>Design by <a href="https://twitter.com/WilliamSatterth">William Satterthwaite</a>, 2016. Fonts from <a href="https://www.google.com/fonts">google.com/fonts</a>, map from <a href="https://maps.google.com">maps.google.com</a>. All other context under
-				<a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons</a>.</p>
-			</div>
 		</div>
 	</body>
 </html>
