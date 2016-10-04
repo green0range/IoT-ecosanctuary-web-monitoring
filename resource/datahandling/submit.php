@@ -4,7 +4,7 @@
 date_default_timezone_set("Pacific/Auckland");
 
 
-//ini_set('display_errors', 1);
+ini_set('display_errors', 1);
 //ini_set('display_startup_errors', 1);
 //error_reporting(E_ALL);
 
@@ -19,8 +19,7 @@ date_default_timezone_set("Pacific/Auckland");
 
 $tmp = 0;
 
-require 'vendor/autoload.php';
-use Plivo\RestAPI;
+include 'plivo.php';
 
  // Read about this code at http://greenorange.space/blog/Generating%20Primes.html
 function generate_prime($min, $max){
@@ -130,39 +129,9 @@ function send_text($msg, $number){
 			'Body' => $msg
 		)
 	);*/
-
-	// get the authentication keys
-	$f = fopen(".sms_key", "r");
-	$auth = fread($f, filesize(".sms_keys"));
-	fclose($f);
-
-	$auth = explode(",", $auth);
-
-	// If we use Plivo
-	$auth_id = $auth[0];
-	$auth_token = $auth[1];
-
-	$p = new RestAPI($auth_id, $auth_token);
-
-	// Set message parameters
-	$params = array(
-        	'src' => '+64123456789', // Sender's phone number with country code
-        	'dst' => $number, // Receiver's phone number with country code
-        	'text' => $msg, // Your SMS text message
-	);
-	// Send message
-	$response = $p->send_message($params);
-
-    // Print the response
-    echo "Response : ";
-    print_r ($response['response']);
-
-    // Print the Api ID
-    echo "<br> Api ID : {$response['response']['api_id']} <br>";
-
-    // Print the Message UUID
-    echo "Message UUID : {$response['response']['message_uuid'][0]} <br>";
-
+	echo "./text.py " . $number . " " . $msg;
+	echo exec("./text.py " . $number . " " . $msg);
+	echo "done";
 }
 
 function log_rules($entry){
@@ -659,7 +628,11 @@ echo $pass;
 			header("Location: ../../rules.php?hk=1&token=".$_GET['token']."&session=".$_GET['session']."&redirect=".$_GET['redirect']);
 		}
 		if ($_GET['act']=="TEST_SMS"){
-			send_text($_GET[msg],$_GET[number]);
+			if ($_GET['msg']!=""){
+				send_text($_GET['msg'],$_GET['number']);
+			}else{
+				send_text($_POST['msg'],$_POST['number']);
+			}
 		}
 		if ($_GET['act']=="ADD_NUMBER"){
 			$number = $_POST['cc'] . $_POST['number'];
@@ -668,7 +641,7 @@ echo $pass;
 			$sql = "INSERT INTO contacts (`number`, `name`) VALUES ('" . $number . "', '" . $owner . "')";
 			$db->query($sql);
 			// send verification text
-			send_text("Hi, it's the Orokonui monitoring server here. Just letting you know this phone has successfully been added to the contact list under the name " . $owner . ".", $number);
+			send_text("Hi, Orokonui monitoring server here. Just letting you know this phone has successfully been added to the contact list under the name " . $owner . ".", $number);
 		}
 		if ($_GET['act']=='SENSOR_TYPE'){
 			$q = "INSERT INTO `orokonui`.`sensor_types` (`idnum`, `name`) VALUES ('".$_POST['nid']."', '".$_POST['stn']."')";
@@ -719,7 +692,7 @@ echo $pass;
 
 		// After done act, return to rules page
 		if ($redir != 0){
-			header("Location: ../../rules.php?hk=1&token=".$_GET['token']."&session=".$_GET['session']."&redirect=".$_GET['redirect']."&ka=".$_GET['ka']."&kb=".$_GET['kb']);
+			//header("Location: ../../rules.php?hk=1&token=".$_GET['token']."&session=".$_GET['session']."&redirect=".$_GET['redirect']."&ka=".$_GET['ka']."&kb=".$_GET['kb']);
 		}
 	}else{
 		log_rules("Incorrect hash for " . $_SERVER['REMOTE_ADDR'] ."/". $_GET['token'] . "/" . $_GET[session] .". Attempted act: " . $_GET['act']);

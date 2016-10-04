@@ -848,7 +848,7 @@
 				if (xseries.length==0)
 				{
 					cd.font="20px Georgia";
-					cd.fillText("Click the options button",50,25);
+					cd.fillText("Click the settings button",50,25);
 					cd.fillText(" to select data types.", 50,50);
 				}
 			}else{ // If there is not set location

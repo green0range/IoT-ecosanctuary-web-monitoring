@@ -74,7 +74,15 @@
 						Phone Name: <input type='text' name='phone_name'></input><br>
 						<input type='submit' value='Add this phone.'></input><br>
 						When you first add a phone, a text message will be sent to it. If you do not receive the message with a few minutes, adding the number has not worked and you should delete it and re-add it. Check numbers have thier valid country code, the first 0 is not needed, i.e: 022 becomes +6422</p>
-					<form>
+					</form>
+					<br>
+					<br><h2>Send test message</h2>
+					<p>Send a text to any number in order to test the SMS system is working (or if you ran out of credit)</p>
+					<form method='post' action='" . $links_auth . "&act=TEST_SMS'>
+                                                <p>Number (with country code): <input type='text' value='+64' name='number'><br>
+                                                Message: <input type='text' name='msg'></input><br>
+                                                <input type='submit' value='Send'></input><br>
+                                        </form>
                                 </div>
                                 ";
 			}else if($_GET['redirect'] == "config:sensors"){
