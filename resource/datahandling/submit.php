@@ -4,7 +4,7 @@
 date_default_timezone_set("Pacific/Auckland");
 
 
-ini_set('display_errors', 1);
+//ini_set('display_errors', 1);
 //ini_set('display_startup_errors', 1);
 //error_reporting(E_ALL);
 
@@ -19,7 +19,7 @@ ini_set('display_errors', 1);
 
 $tmp = 0;
 
-include 'plivo.php';
+//include 'plivo.php';
 
  // Read about this code at http://greenorange.space/blog/Generating%20Primes.html
 function generate_prime($min, $max){
@@ -281,9 +281,7 @@ function alert_time($n, $s, $e, $d, $num, $msg, $ruleid){
 }
 
 function getcrit($time, $lat, $lng, $value, $type, $repeat){
-	// this returns the crit and fix marker.
-	// it also send texts acording to rules
-	// lookup rules
+	// Sends texts acording to the rules.
 	$db = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
         $sqlquery = "SELECT * FROM rules";
         $result = $db->query($sqlquery);
@@ -441,18 +439,31 @@ if ($_GET["stage"] != ""){
 // they are not used with th timeout, a new one is generated and the process
 // must be restarted.
 if ($stage == 1){
-  $my_keys = key_gen();
+  // if current keys haven't timed out:
   $dbk = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
-	$q = "UPDATE `orokonui`.`rsa_keys` SET `n` = '".$my_keys[1]."' WHERE `rsa_keys`.`id` = 1; ";
-	$dbk->query($q);
+  $q = "SELECT * FROM rsa_keys";
+  $result = $dbk->query($q);
+  while($r = $result->fetch_assoc())
+  {
+	if(time()>($r['timeout']+50))
+	{
+  		$my_keys = key_gen();
+		$q = "UPDATE `orokonui`.`rsa_keys` SET `n` = '".$my_keys[1]."' WHERE `rsa_keys`.`id` = 1; ";
+		$dbk->query($q);
 	
-	$q = "UPDATE `orokonui`.`rsa_keys` SET `prikey` = '".$my_keys[0]."' WHERE `rsa_keys`.`id` = 1; ";
-	$dbk->query($q);
+		$q = "UPDATE `orokonui`.`rsa_keys` SET `prikey` = '".$my_keys[0]."' WHERE `rsa_keys`.`id` = 1; ";
+		$dbk->query($q);
 	
-	$q = "UPDATE `orokonui`.`rsa_keys` SET `timeout` = '".time()."' WHERE `rsa_keys`.`id` = 1; ";
-	$dbk->query($q);
-	$q = "UPDATE `orokonui`.`rsa_keys` SET `pubkey` = '".$my_keys[2]."' WHERE `rsa_keys`.`id` = 1; ";
-        $dbk->query($q);
+		$q = "UPDATE `orokonui`.`rsa_keys` SET `timeout` = '".time()."' WHERE `rsa_keys`.`id` = 1; ";
+		$dbk->query($q);
+		$q = "UPDATE `orokonui`.`rsa_keys` SET `pubkey` = '".$my_keys[2]."' WHERE `rsa_keys`.`id` = 1; ";
+       		$dbk->query($q);
+	}
+	else
+	{
+		$my_keys = array($r['prikey'], $r['pubkey'], $r['n']);
+	}
+  }
 	/*
   $myFile2 = "keys/.htprivatePt1.key";
   $myFileLink2 = fopen($myFile2, 'w+') or die("ERR: Cannot write key files");
