@@ -1,15 +1,35 @@
 <html>
-<head>
-<title>IoT Monitoring Source</title>
-</head>
-<body>
-<h1>IoT Monitoring Source</h1>
-<p>This is free (as in freedom) and open source software, here are some resources to get started. It is licensed under GPL3.</p>
-<p>Server Git repositary: <a href='https://github.com/green0range/IoT-ecosanctuary-web-monitoring'>[external link]</a></p>
-<p>Documentation Git repositary: <a href='https://github.com/green0range/IoT-ecosanctuary-web-monitoring-docs'>[external link]</a></p>
-<p>Collector Git repositary: <a href='https://github.com/green0range/IoT-ecosanctuary-web-monitoring'>[external link]</a></p>
-<p>Sensor and node repos will be coming soon!</p>
-<p>Note, this is in active development and not very stable. I will not be taking pull requests at this time, due to this project being for a school scholarship, and such a system not embracing collabration very well. I will accept pull requests starting in december, 2016.</p>
-<p>If you have any questions that are not anwsered in documentation, feel free to email me: william[dot]satterthwaite1008[at]gmail[dot]com</p>
-</body>
+	<head>
+	<title>Source - Orokonui monitoring</title>
+	<!-- Import Styles CSS -->
+	<link rel="stylesheet" type="text/css" href="style.css" media="screen and (min-device-width: 800px)"/>
+	<link rel="stylesheet" type="text/css" href="mobile.css" media="screen and (max-device-width: 799px)"/>
+	<!-- Font Import -->
+	<link href='https://fonts.googleapis.com/css?family=Righteous' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	</head>
+	<body>
+
+		<!--All body is in contents div, then applicable div, i.e header, map, etc.-->
+		<!--Contents sets up styling constants, i.e page with, while others setup styling
+		variables relevant to ech div, i.e text colour-->
+		<div id="header"> <!--I decided to but the header outside of the content wrapper so it would strech across the entire screen.-->
+			<img src="resource/header.png" width="100%">
+			<p><a href="index.php">Data</a> &nbsp; | &nbsp; <a href="status.php">Status</a> &nbsp; | &nbsp; <a href="about.php">About</a> &nbsp; | &nbsp; <a href="rules.php">Setup</a> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </p>
+			<hr>
+		</div>
+		<br>
+		<div id="content">
+			<h1>Source Code</h1>
+			<p>You can download the source from Github repositories found below:</p>
+			<p>
+				<ul>
+					<li><a href="https://github.com/green0range/IoT-ecosanctuary-web-monitoring">Server code</a></li>
+					<li><a href="https://github.com/green0range/IoT-ecosanctuary-web-monitoring-collector">Collector code</a></li>
+					<li><a href="https://github.com/green0range/IoT-ecosanctuary-web-monitoring-Nodes">Nodes + Sensors</a></li>
+					<li><a href="https://github.com/green0range/IoT-ecosanctuary-web-monitoring-Docs">Documentation</a></li>
+				</ul>
+			</p>
+		</div>
+	</body>
 </html>

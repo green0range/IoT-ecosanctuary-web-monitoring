@@ -13,7 +13,7 @@
 		<!--All body is in contents div, then applicable div, i.e header, map, etc.-->
 		<!--Contents sets up styling constants, i.e page with, while others setup styling
 		variables relevant to ech div, i.e text colour-->
-		<div id="header"> <!--I decided to but the header outside of the content wrapper so it would strech across the entire screen.-->
+		<div id="header"> <!--I decided to but the header outside of the content wrapper so it would stretch across the entire screen.-->
 			<img src="resource/header.png" width="100%">
 			<p><a href="index.php">Data</a> &nbsp; | &nbsp; <a href="status.php">Status</a> &nbsp; | &nbsp; <a href="about.php">About</a> &nbsp; | &nbsp; <a href="rules.php">Setup</a> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </p>
 			<hr>
@@ -21,18 +21,18 @@
 		<br>
 		<div id="content">
       <div id="about">
-        <p>Orokonui monitor is a project to monitor some aspects of the <a href="http://orokonui.nz/">Orokonui</a> ecosanctuary though Internet of things (Iot) devices.
-          This doubles in warning the Orokonui staff if issues arise, with an early warning SMS and <a href="status.php">status</a> page, as well as letting the public
+        <p>Orokonui monitor is a project to monitor some aspects of the <a href="http://orokonui.nz/">Orokonui</a> ecosanctuary though Internet of things (IoT) devices.
+          This is used to warning the Orokonui staff if issues arise with an early warning text message system and <a href="status.php">status</a> page, as well as letting the public
           and researchers know about the status of the ecosanctuary.</p>
           <br>
-          <h3>What's Monitored?</h3>
+          <h3>What is Monitored?</h3>
           <br>
             <div id="tabin">
               <ul>
                 <li>Kiwi gates</li>
                 <div id="tabin">
                   <br>
-                  <p>These are 4 gates sepportate the kiwi's, the openings and closings of these are tracks,
+                  <p>These are 4 gates separate the kiwi's, the openings and closings of these are tracks,
                   as well as a warning system for when they are left open too long.</p>
                   <br>
                 </div>
@@ -49,7 +49,7 @@
                     <ul>
                       <li>Average Wind Speed</li>
                       <li>Highest Gust per 10 minutes</li>
-                      <li>Humitity</li>
+                      <li>Humidity</li>
                       <li>Rainfall</li>
                       <li>Temperature</li>
                     </ul>
@@ -60,20 +60,20 @@
               </ul>
           </div>
           <br>
-          <h3>How's it work?</h3>
+          <h3>How does it work?</h3>
           <br>
           <p>Data is collected by sensors on microcontrollers in the field. These raw recordings
-            are then sent to a collector system over a radio link. The collecter formats and sorts
+            are then sent to a collector system over a radio link. The collector formats and sorts
             the data before sending it to the server. The server checks the data, sends alerts,
-            and then puts it on this website for us all to learn from!</p>
+            and then puts it on this website for all to view.</p>
             <br>
             <br>
 	<h3>The Source:</h3>
 	    <br>
-	The software behind this is Libre, meaning anyone with something to monitor can use it and adapt it for their own purposes, under the terms of the GPL3. I'd like to setup a database of ecostantuaries collecting data with this system, so that researcher can quickly and easily access a great sample, with all sorts or varible. If you would like to use this software, have a look below for the source. If you know of other ecostantuaries using it, add their site to the <a href='resource/not-yet.html'>wiki</a>, so that we can all see their results!
-	<br>
-	<br>
-	<a href='resource/source.html'>Source Code</a>
+		<p>The software behind this is Libre, meaning anyone with something to monitor can use it and adapt it for their own purposes, under the terms of the GPL3.
+		You can download the source <a href='resource/source.html'>here</a>.</p>
+		<br>
+		<br>
 <br>
 <br>
       </div>
