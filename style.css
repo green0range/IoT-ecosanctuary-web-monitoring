@@ -44,7 +44,7 @@ h1{
 #header {
 	font-family: 'Righteous', cursive;
 	text-align: right;
-	background-color: #447700;
+	background-color: #81a474;
 	overflow:hidden;
 	 margin: 0,0,0,0;
 }
@@ -104,14 +104,14 @@ a {
 	text-decoration: none;
 	font-family: 'Open Sans', sans-serif;
 	font-size: inherit;
-	color: inherit;
+	color: #006699;
 }
 
 a:visited {
 	text-decoration: none;
 	font-family: 'Open Sans', sans-serif;
 	font-size: inherit;
-	color: inherit;
+	color: #006699;
 }
 a:hover {
 	text-decoration: underline;
