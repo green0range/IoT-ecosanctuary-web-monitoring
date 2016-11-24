@@ -1,6 +1,6 @@
 <?php
 // This script provides data in the form of java script vars
-ini_set('display_errors', 'On');
+//ini_set('display_errors', 'On');
 function check_exists($array, $str)
 {
 	for ($i=0;$i<sizeof($array);$i++)
@@ -162,6 +162,36 @@ for ($i=0;$i<sizeof($added_data);$i++)
                 }
 		echo "]";
         }
+}
+
+// see all node entries
+
+$dba = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
+    $q = "SELECT * FROM sensor_data";
+    $result = $dba->query($q);
+    $time = array();
+    $type = array();
+    $data = array();
+    while ($row = $result->fetch_assoc())
+    {
+        array_push($time, $row['time']);
+        array_push($data, $row['data']);
+	array_push($type, $row['sType']);
+    }
+
+
+if ($_GET['see'] == "Workshop_Gate")
+{
+	if ($_GET['aspect'] == "data")
+	{
+		echo ";var di_Workshop_Gate_data = [";
+		for ($i=0;$i<sizeof($time);$i++)
+		{
+			$d="['".$type[$i]."','".$data[$i]."','".$time[$i]."'],";
+			echo $d;
+		}
+	}
+	echo "[0,0,0]];";
 }
 
 

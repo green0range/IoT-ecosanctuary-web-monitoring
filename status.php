@@ -7,7 +7,7 @@
     <!-- Font Import -->
     <link href='https://fonts.googleapis.com/css?family=Righteous' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-  <head>
+  </head>
   <body bgcolor="#FFFFFF">
 
     <!--Comment this out when system is complete. Uncomment during mainince-->
@@ -331,7 +331,6 @@ echo $messages;
 
 <!-- End dynatic section -->
 	</div>
-		</div>
 		</div>
 	</body>
 </html>

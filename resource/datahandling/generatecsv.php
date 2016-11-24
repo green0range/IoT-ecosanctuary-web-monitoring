@@ -2,7 +2,7 @@
     //connect to db
     $db = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");    // connection error handler
 	if ($db->connect_error) {
-        echo "Oops, there has been a problem connecting to the database, this will be logged.";
+        echo "Oops, there has been a problem connecting to the database.";
         // Add logging. 
         die($db->connect_error);
     }
@@ -11,7 +11,7 @@
     $result = $db->query($sql);
     if ($_GET['sensor'] == "all"){
 		//echo "Fetching data...<br>";
-        $csv = "Lat,Lng,Type,Value,Time\r\n";
+        $csv = "Lat,Lng,Type,Value,datatime,unixtimestamp\r\n";
         $value =array();
         $type =array();
         $lat =array();
@@ -29,11 +29,11 @@
         $db->close();
 		//echo "Generating CSV from data...<br>";
         for ($i=0;$i<sizeof($time);$i++){
-            $csv .= $lat[$i].",".$lng[$i].",".$type[$i].",".$value[$i].",".$time[$i]."\r\n";
+            $csv .= $lat[$i].",".$lng[$i].",".$type[$i].",".$value[$i].",".date('d-m-y H:i:s',$time[$i]).",".$time[$i]."\r\n";
         }
 		// Write file for download
 		//echo "Writing CSV file...<br>";
-        $f = fopen("Orokonui_Sensor_data.csv", "w") or die("Error writing CSV.");
+        $f = fopen("Orokonui_Sensor_data.csv", "w") or die("Sorry, there was a problem writing the file, instead copy and paste this into a csv document.<br><br>".$csv);
 		fwrite($f, $csv);
 		fclose($f);
 		//echo "Redirecting...";

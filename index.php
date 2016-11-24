@@ -25,7 +25,7 @@
 		}
 	</script>
 </head>
-<!-- php script here defines variables, see source.-->
+<!-- php script here, see source at https://github.com/green0range/IoT-ecosanctuary-web-monitoring -->
 <?php
 	//ini_set('display_errors', True);
 	// #### SECTION~ START ####
@@ -114,6 +114,19 @@
 	// #### START SECTION ####
 	//data
 	$db = new mysqli("localhost", "bot", "TSMD4B6oy6BZPRyq", "orokonui");
+	// sets up defaults
+	$sql = "SELECT * FROM data_defaults";
+        $result = $db->query($sql);
+        while($row = $result->fetch_assoc()) {
+		if ($row['name'] == "lat"){$defaultslat = $row['value'];}
+                if ($row['name'] == "lng"){$defaultslng = $row['value'];}
+		if ($row['name'] == "type"){$defaultstype = $row['value'];}
+		if ($row['name'] == "start_date"){$defaultsstart_date = $row['value'];}
+        }
+	if ($location == "not_set")
+	{
+		echo "<script>window.location = 'index.php?lat=".$defaultslat."&lng=".$defaultslng."&type=".$defaultstype."&start_date=".$defaultsstart_date."'; </script>";
+        }
 	$sql = "SELECT sValue, time, lat, lng, sType FROM sensor_data";
 	$result = $db->query($sql);
 	if ($result->num_rows > 0) {
@@ -340,8 +353,8 @@
 					</script>
 					<!--contains options button-->
 					<div id="dataoptionsbar", align="right">
-						<img src="resource/options.png", title="Settings", width='64px', height='64px', onclick="settingsClick()">
-						<br><div id='help-button' onclick='settingsClick()'>Settings </div>
+						<a><img src="resource/options.png", title="Settings", width='64px', height='64px', onclick="settingsClick()">
+						<br><div id='help-button' onclick='settingsClick()'>Settings </a></div>
 					</div>
 					<div id="options", style="width: 0px; float: right; overflow: hidden; align: right; height: 0px;">
 						<form style="display:inline;", method="post", action="optionsHandler.php?<?php echo $_SERVER["QUERY_STRING"]; ?>">
@@ -356,7 +369,7 @@
 								<p><strong>Start:</strong></p>
 								<script src='resource/lib/Pikaday/pikaday.js'></script>
 								<p>
-								<input id='start_date' name='start_date'></input>
+								<input id='start_date' placeholder='Pick a date' name='start_date'></input>
 								<script>
 									var picker = new Pikaday({field:document.getElementById('start_date')});
 								</script>
@@ -388,7 +401,7 @@
 									<option>11pm</option>
 								</select></p>
 								<p><strong>End:</strong></p>
-								<input name='end_date' id='end_date'></input>
+								<input name='end_date' placeholder='Pick a date' id='end_date'></input>
 									<script>
 										var picker2 = new Pikaday({field:document.getElementById('end_date')});
 									</script>
@@ -465,7 +478,7 @@
 								</fieldset>
 							</div>
 							<div id="options.submit">
-								<input class='button' value='Go!' type="submit"></input>
+								<input class='button' value='Submit' type="submit"></input>
 							</div>
 						</form>
 						<hr>
@@ -503,6 +516,19 @@
 					<br><br>
 					<table style="width:100%" border="1">
 						<?php
+							// removes blank enties from seriesx
+							$seriesxnew = array();
+							$seriesynew = array();
+							for ($i=0; $i < sizeof($seriesx); $i++)
+							{
+								if ($seriesx[$i]!="")
+								{
+									array_push($seriesxnew, $seriesx[$i]);
+									array_push($seriesynew, $seriesy[$i]);
+								}
+							}
+							$seriesx = $seriesxnew;
+							$seriesy = $seriesynew;
 							$max_table_size = 10;
 							// Start title row
 							echo "<tr>";

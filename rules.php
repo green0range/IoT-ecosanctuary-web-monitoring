@@ -386,8 +386,8 @@ $page_contents .="</p>
                 }
 			</script>
           <p>Access code: </p><input id='access_code' type='password'></input><br>
-		  <input type='submit' onclick='submitter()' value='Go. '></input>
-		<br><p>Note, while loading this page you were redirected through a key getting srcipt, this page will not transmit your access code in plain text, however uses these keys to encode it before transmitting to the server, since an insecure HTTP protocol is used. Man-in-the-middle attacks are usfuless here - don't bother.</p>
+		  <input type='submit' onclick='submitter()' value='Submit '></input>
+		<br><p>Note, while loading this page you were redirected through a key getting script. This page will not transmit your access code in plain text, however uses these keys to encode it before transmitting to the server, since an insecure HTTP protocol is used. Man-in-the-middle attacks are useless here - don't bother.</p>
         <br>
         <br>";
 		}
